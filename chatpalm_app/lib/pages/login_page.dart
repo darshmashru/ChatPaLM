@@ -1,6 +1,7 @@
 import "package:chatpalm_app/Components/button.dart";
 import "package:chatpalm_app/Components/squaretile.dart";
 import "package:chatpalm_app/Components/textfield.dart";
+import "package:chatpalm_app/services/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
@@ -137,12 +138,18 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 const SizedBox(height: 50),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Squaretile(imagePath: "lib/assets/images/google.png"),
+                    Squaretile(
+                      imagePath: "lib/assets/images/google.png",
+                      onTap: () => AuthService().signInWithGoogle(),
+                    ),
                     SizedBox(width: 10),
-                    Squaretile(imagePath: "lib/assets/images/apple.png")
+                    Squaretile(
+                      imagePath: "lib/assets/images/apple.png",
+                      onTap: () {},
+                    )
                   ],
                 ),
                 const SizedBox(height: 50),
