@@ -1,6 +1,6 @@
-import 'package:chatpalm_app/pages/auth_page.dart';
+import 'package:ChatPaLM/screens/auth_page.dart';
 import "package:flutter/material.dart";
-import 'pages/login_page.dart';
+import 'package:ChatPaLM/screens/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -17,7 +17,7 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AuthPage(),
     );
