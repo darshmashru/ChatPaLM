@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
     //   ),
     //   body: Center(child: Text("Welcome " + user.email!)),
     // );
-    return const MaterialApp(
+    return MaterialApp(
       home: ApiIntegrationWidget(),
     );
   }

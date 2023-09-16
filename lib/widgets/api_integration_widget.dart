@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
 
-
 class ApiIntegrationWidget extends StatelessWidget {
-  const ApiIntegrationWidget({super.key});
+  final TextEditingController _promptInputController = TextEditingController();
+  final TextEditingController _promptOutputController = TextEditingController();
+  ApiIntegrationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +17,39 @@ class ApiIntegrationWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: TextField(
+                controller: _promptInputController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter a prompt',
+                ),
+              ),
+            ),
             ElevatedButton(
               onPressed: () {
-                // Call the function to generate the story here
                 generateTextWithPrompt(
-                    promptString: 'Write a story about a Magic Backpack');
+                    promptString: _promptInputController.text);
               },
-              child: const Text('Generate Story'),
+              child: const Text('Generate Text'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 300.0,
+                ),
+                child: TextField(
+                  maxLines: null,
+                  enabled: false,
+                  controller: _promptOutputController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Output text',
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -30,20 +57,14 @@ class ApiIntegrationWidget extends StatelessWidget {
     );
   }
 
-  static Future<String> generateTextWithPrompt({
+  Future<String> generateTextWithPrompt({
     required String promptString,
   }) async {
-    /// DO NOT PUBLICLY SHARE YOUR API KEY.
-    // Load the API key from the local .env file.
+
     String apiKey = dotenv.env['PALM_API_KEY']!;
 
-    // PaLM 2.0 model name
     String textModel = 'models/text-bison-001';
 
-    // Construct the prompt string with input examples
-    // String promptString = 'Teach me how to print hello world in python';
-
-    // Configure the text generation request
     GenerateTextRequest textRequest = GenerateTextRequest(
         prompt: TextPrompt(text: promptString),
         temperature: 0.7,
@@ -80,13 +101,14 @@ class ApiIntegrationWidget extends StatelessWidget {
               threshold: HarmBlockThreshold.mediumAndAbove),
         ]);
 
-    // Call the PaLM API to generate text
     final GeneratedText response = await GenerativeLanguageAPI.generateText(
       modelName: textModel,
       request: textRequest,
       apiKey: apiKey,
     );
     print(response.candidates.map((candidate) => candidate.output).join('\n'));
+    _promptOutputController.text =
+        response.candidates.map((candidate) => candidate.output).join('\n');
 
     // Extract and return the generated text
     if (response.candidates.isNotEmpty) {
