@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
+import 'package:ChatPaLM/widgets/custom_bottom_nav_bar.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -19,8 +20,10 @@ class HomePage extends StatelessWidget {
     //   ),
     //   body: Center(child: Text("Welcome " + user.email!)),
     // );
-    return MaterialApp(
-      home: ApiIntegrationWidget(),
+    // return MaterialApp(
+    return Scaffold(
+      body: ApiIntegrationWidget(),
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }

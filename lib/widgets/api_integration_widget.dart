@@ -11,48 +11,46 @@ class ApiIntegrationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('API Integration Page'),
+        title: const Text('Welcome to ChatPaLM!'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(25.0),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: TextField(
+              controller: _promptInputController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter a prompt',
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              generateTextWithPrompt(
+                  promptString: _promptInputController.text);
+            },
+            child: const Text('Generate Text'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxHeight: 350.0,
+              ),
               child: TextField(
-                controller: _promptInputController,
+                maxLines: null,
+                enabled: false,
+                controller: _promptOutputController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter a prompt',
+                  hintText: 'Output text',
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                generateTextWithPrompt(
-                    promptString: _promptInputController.text);
-              },
-              child: const Text('Generate Text'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: 350.0,
-                ),
-                child: TextField(
-                  maxLines: null,
-                  enabled: false,
-                  controller: _promptOutputController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Output text',
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
