@@ -38,7 +38,7 @@ class ApiIntegrationWidget extends StatelessWidget {
               padding: const EdgeInsets.all(25.0),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxHeight: 300.0,
+                  maxHeight: 350.0,
                 ),
                 child: TextField(
                   maxLines: null,
