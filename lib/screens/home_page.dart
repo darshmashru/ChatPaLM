@@ -1,8 +1,9 @@
+import 'package:ChatPaLM/screens/auth_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
 import 'package:ChatPaLM/widgets/custom_bottom_nav_bar.dart';
-
+import 'package:ChatPaLM/screens/LoginOrRegister.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -33,7 +34,16 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Welcome to ChatPaLM!'),
-        actions: [Icon(Icons.logout)],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AuthPage()),
+                );
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
