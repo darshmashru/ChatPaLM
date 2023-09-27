@@ -1,3 +1,4 @@
+import 'package:ChatPaLM/screens/home_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -12,7 +13,7 @@ class CustomBottomNavBar extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.home),
             onPressed: () {
-              // Handle navigation to home screen
+              HomePage();
             },
           ),
           const Spacer(), // Add spacer to separate icons and logo
@@ -25,9 +26,9 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           const Spacer(), // Add spacer to separate icons and logo
           IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.person),
             onPressed: () {
-              // Handle navigation to search screen
+              // Handle navigation to Account Information screen
             },
           ),
         ],

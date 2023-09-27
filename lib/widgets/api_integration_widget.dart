@@ -10,9 +10,6 @@ class ApiIntegrationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Welcome to ChatPaLM!'),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -39,13 +36,15 @@ class ApiIntegrationWidget extends StatelessWidget {
               constraints: const BoxConstraints(
                 maxHeight: 350.0,
               ),
-              child: TextField(
-                maxLines: null,
-                enabled: false,
-                controller: _promptOutputController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Output text',
+              child: SingleChildScrollView(
+                child: TextField(
+                  maxLines: null,
+                  enabled: false,
+                  controller: _promptOutputController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Output text',
+                  ),
                 ),
               ),
             ),
