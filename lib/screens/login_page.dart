@@ -1,23 +1,22 @@
-import "package:chatpalm_app/Components/button.dart";
-import "package:chatpalm_app/Components/squaretile.dart";
-import "package:chatpalm_app/Components/textfield.dart";
-import "package:chatpalm_app/services/auth_service.dart";
+import "package:ChatPaLM/Components/button.dart";
+import "package:ChatPaLM/Components/squaretile.dart";
+import "package:ChatPaLM/Components/textfield.dart";
+import "package:ChatPaLM/services/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
-class RegisterPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   final Function? onTap;
-  RegisterPage({super.key, required this.onTap});
+  LoginPage({super.key, required this.onTap});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
 
   void showErrorMessage(String message) {
     showDialog(
@@ -35,21 +34,20 @@ class _RegisterPageState extends State<RegisterPage> {
         });
   }
 
-  void signUserUp() async {
+  void signUserIn() async {
     showDialog(
         context: context,
         builder: (context) {
-          return const Center();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         });
     try {
-      if (passwordController.text == confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
-      } else {
-        Navigator.pop(context);
-        showErrorMessage("Passwords Dont Match");
-      }
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
       showErrorMessage(e.code);
     }
   }
@@ -69,13 +67,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const Icon(
                   Icons.lock,
-                  size: 50,
+                  size: 100,
                 ),
                 const SizedBox(
                   height: 50,
                 ),
                 Text(
-                  "Create an Account !",
+                  "Welcome Back You've Have Been Missed !",
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 16,
@@ -100,17 +98,22 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                MyTextField(
-                  controller: confirmPasswordController,
-                  hintText: 'ConfirmPassword',
-                  obscureText: true,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Forgot Password?",
+                        style: TextStyle(color: Colors.grey[600]),
+                      )
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 MyButton(
-                  onTap: signUserUp,
-                  text: 'Sign Up',
+                  text: 'Sign In',
+                  onTap: signUserIn,
                 ),
                 const SizedBox(height: 50),
                 Row(
@@ -139,23 +142,26 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Squaretile(
-                        imagePath: "lib/assets/images/google.png",
-                        onTap: () => AuthService().signInWithGoogle()),
+                      imagePath: "lib/assets/images/google.png",
+                      onTap: () => AuthService().signInWithGoogle(),
+                    ),
                     SizedBox(width: 10),
                     Squaretile(
-                        imagePath: "lib/assets/images/apple.png", onTap: () {})
+                      imagePath: "lib/assets/images/apple.png",
+                      onTap: () {},
+                    )
                   ],
                 ),
                 const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("already a member ?"),
+                    const Text("Not a member ?"),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap as void Function()?,
                       child: const Text(
-                        "Login",
+                        "Register Now",
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
