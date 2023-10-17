@@ -4,6 +4,7 @@ import "package:ChatPaLM/Components/textfield.dart";
 import "package:ChatPaLM/services/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
   final Function? onTap;
@@ -55,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.black,
         body: SafeArea(
             child: Center(
           child: SingleChildScrollView(
@@ -65,9 +66,10 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                const Icon(
-                  Icons.lock,
-                  size: 100,
+                SvgPicture.asset(
+                  'lib/assets/logos/PaLM_logo.svg',
+                  width: 100,
+                  height: 100,
                 ),
                 const SizedBox(
                   height: 50,
@@ -75,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                 Text(
                   "Welcome Back You've Have Been Missed !",
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
@@ -105,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         "Forgot Password?",
-                        style: TextStyle(color: Colors.grey[600]),
+                        style: TextStyle(color: Colors.white),
                       )
                     ],
                   ),
@@ -127,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text('Or Continue With',
-                          style: TextStyle(color: Colors.grey[600])),
+                          style: TextStyle(color: Colors.white)),
                     ),
                     Expanded(
                       child: Divider(
@@ -156,7 +158,13 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Not a member ?"),
+                    const Text(
+                      "Not a member ?",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap as void Function()?,

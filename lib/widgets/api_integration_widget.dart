@@ -6,53 +6,94 @@ class ApiIntegrationWidget extends StatelessWidget {
   final TextEditingController _promptInputController = TextEditingController();
   final TextEditingController _promptOutputController = TextEditingController();
   ApiIntegrationWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: TextField(
-              controller: _promptInputController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter a prompt',
-              ),
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.teal,
-            ),
-            onPressed: () {
-              generateTextWithPrompt(
-                  promptString: _promptInputController.text);
-            },
-            child: const Text('Generate Text'),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(25.0),
+          Expanded(
             child: ConstrainedBox(
               constraints: const BoxConstraints(
                 maxHeight: 350.0,
               ),
               child: SingleChildScrollView(
                 child: TextField(
+                  style: TextStyle(color: Colors.white),
                   maxLines: null,
                   enabled: false,
                   controller: _promptOutputController,
                   decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Output text',
+                    filled: true,
+                    fillColor: Colors.black,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    hintText: "Output text",
+                    hintStyle: TextStyle(
+                      color: Colors.white, // Set the text color to white
+                    ),
                   ),
                 ),
               ),
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 300.0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 25.0, vertical: 25.0),
+                  child: TextField(
+                    style: TextStyle(color: Colors.white),
+                    controller: _promptInputController,
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Color.fromRGBO(30, 30, 30, 1),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromRGBO(30, 30, 30, 1),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromRGBO(30, 30, 30, 1),
+                        ),
+                      ),
+                      hintText: "Input text",
+                      hintStyle: TextStyle(
+                        color: Colors.white, // Set the text color to white
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 100.0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    generateTextWithPrompt(
+                        promptString: _promptInputController.text);
+                  },
+                  child: const Text('Generate Text'),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
@@ -61,7 +102,6 @@ class ApiIntegrationWidget extends StatelessWidget {
   Future<String> generateTextWithPrompt({
     required String promptString,
   }) async {
-
     String apiKey = dotenv.env['PALM_API_KEY']!;
 
     String textModel = 'models/text-bison-001';

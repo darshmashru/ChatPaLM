@@ -8,25 +8,32 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment
+            .spaceAround, // This will center the icons horizontally
+        crossAxisAlignment:
+            CrossAxisAlignment.center, // This will center the icons vertically
         children: <Widget>[
           IconButton(
-            icon: const Icon(Icons.home),
+            icon: const Icon(
+              Icons.home,
+              size: 40,
+            ),
             onPressed: () {
               HomePage();
             },
           ),
-          const Spacer(), // Add spacer to separate icons and logo
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
               "lib/assets/logos/image 7.png", // Replace with your logo
-              height: 24, // Adjust height as needed
+              height: 50, // Adjust height as needed
             ),
           ),
-          const Spacer(), // Add spacer to separate icons and logo
           IconButton(
-            icon: const Icon(Icons.person),
+            icon: const Icon(
+              Icons.person,
+              size: 50,
+            ),
             onPressed: () {
               // Handle navigation to Account Information screen
             },
