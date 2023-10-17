@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Welcome to ChatPaLM!'),
+        backgroundColor: Colors.teal,
         actions: [
           IconButton(
               onPressed: () {

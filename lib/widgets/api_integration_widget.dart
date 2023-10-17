@@ -24,6 +24,10 @@ class ApiIntegrationWidget extends StatelessWidget {
             ),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.teal,
+            ),
             onPressed: () {
               generateTextWithPrompt(
                   promptString: _promptInputController.text);
