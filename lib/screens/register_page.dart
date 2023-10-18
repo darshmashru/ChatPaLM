@@ -57,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.black,
         body: SafeArea(
             child: Center(
           child: SingleChildScrollView(
@@ -67,9 +67,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                const Icon(
-                  Icons.lock,
-                  size: 50,
+                Image.asset(
+                  'lib/assets/logos/PaLM Logo.png',
+                  width: 100,
+                  height: 100,
                 ),
                 const SizedBox(
                   height: 50,
@@ -150,7 +151,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("already a member ?"),
+                    const Text(
+                      "already a member ?",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap as void Function()?,

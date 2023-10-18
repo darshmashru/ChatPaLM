@@ -1,10 +1,10 @@
 import "package:ChatPaLM/Components/button.dart";
 import "package:ChatPaLM/Components/squaretile.dart";
 import "package:ChatPaLM/Components/textfield.dart";
+import "package:ChatPaLM/screens/home_page.dart";
 import "package:ChatPaLM/services/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
   final Function? onTap;
@@ -47,6 +47,10 @@ class _LoginPageState extends State<LoginPage> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
       Navigator.pop(context);
+
+      // Redirect to the home_page.dart file
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       showErrorMessage(e.code);
@@ -66,8 +70,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                SvgPicture.asset(
-                  'lib/assets/logos/PaLM_logo.svg',
+                Image.asset(
+                  'lib/assets/logos/PaLM Logo.png',
                   width: 100,
                   height: 100,
                 ),
