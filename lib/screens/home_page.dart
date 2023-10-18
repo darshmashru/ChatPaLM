@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
         brightness: isDarkMode ? Brightness.dark : Brightness.light,
         primarySwatch: Colors.teal,
         textTheme: TextTheme(
-          headline6: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
+          titleLarge: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
         ),
       ),
       home: Scaffold(
@@ -46,11 +46,12 @@ class HomePage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
+                signUserOut();
                 Navigator.push(
                   context,
                   // MaterialPageRoute(builder: (context) => AuthPage()),
                   MaterialPageRoute(
-                      builder: (context) => LoginOrRegisterPage()),
+                      builder: (context) => const LoginOrRegisterPage()),
                 );
               },
               icon: const Padding(
@@ -95,7 +96,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBarWidget(),
+        bottomNavigationBar: const BottomNavigationBarWidget(),
       ),
     );
   }
