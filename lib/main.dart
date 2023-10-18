@@ -22,7 +22,6 @@ class Myapp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      // ToDo: Change back to AuthPage() and add const to material app
       home: AuthPage(),
       // home: HomePage(),
     );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
 import 'package:ChatPaLM/screens/LoginOrRegister.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:ChatPaLM/Components/BottomNavigationBarWidget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -48,7 +49,8 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   // MaterialPageRoute(builder: (context) => AuthPage()),
-                    MaterialPageRoute(builder: (context) => LoginOrRegisterPage()),
+                  MaterialPageRoute(
+                      builder: (context) => LoginOrRegisterPage()),
                 );
               },
               icon: const Padding(
@@ -66,7 +68,8 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
+              padding:
+                  const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
               child: Text(
                 "Hello $userEmailString!",
                 style: const TextStyle(
@@ -92,34 +95,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: Container(
-          color: Colors.black,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
-            child: GNav(
-              gap: 10,
-              backgroundColor: Colors.black,
-              color: Colors.white,
-              activeColor: Colors.white,
-              tabBackgroundColor: Colors.grey.shade800,
-              padding: EdgeInsets.all(16),
-              tabs: const [
-                GButton(
-                  icon: Icons.search,
-                  text: 'Search',
-                ),
-                GButton(
-                  icon: Icons.home,
-                  text: 'Home',
-                ),
-                GButton(
-                  icon: Icons.person,
-                  text: 'Profile',
-                ),
-              ],
-            ),
-          ),
-        ),
+        bottomNavigationBar: BottomNavigationBarWidget(),
       ),
     );
   }
