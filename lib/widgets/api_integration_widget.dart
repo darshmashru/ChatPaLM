@@ -20,7 +20,7 @@ class ApiIntegrationWidget extends StatelessWidget {
               ),
               child: SingleChildScrollView(
                 child: TextField(
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   maxLines: null,
                   enabled: false,
                   controller: _promptOutputController,
@@ -50,12 +50,12 @@ class ApiIntegrationWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 300.0,
+                width: 290.0,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 25.0, vertical: 25.0),
                   child: TextField(
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     controller: _promptInputController,
                     decoration: const InputDecoration(
                       filled: true,
@@ -79,19 +79,19 @@ class ApiIntegrationWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 100.0,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
+                  width: 100.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                    ),
+                    onPressed: () {
+                      generateTextWithPrompt(
+                          promptString: _promptInputController.text);
+                    },
+                    child: const Text('Generate Text'),
                   ),
-                  onPressed: () {
-                    generateTextWithPrompt(
-                        promptString: _promptInputController.text);
-                  },
-                  child: const Text('Generate Text'),
                 ),
-              ),
             ],
           )
         ],

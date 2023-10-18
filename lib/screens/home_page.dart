@@ -47,7 +47,8 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AuthPage()),
+                  // MaterialPageRoute(builder: (context) => AuthPage()),
+                    MaterialPageRoute(builder: (context) => LoginOrRegisterPage()),
                 );
               },
               icon: const Padding(
