@@ -7,7 +7,7 @@ import "package:flutter/material.dart";
 
 class RegisterPage extends StatefulWidget {
   final Function? onTap;
-  RegisterPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -47,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
             email: emailController.text, password: passwordController.text);
       } else {
         Navigator.pop(context);
-        showErrorMessage("Passwords Dont Match");
+        showErrorMessage("Passwords Don't Match");
       }
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
@@ -75,10 +75,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                Text(
-                  "Create an Account !",
+                const Text(
+                  "Let's create an account for you!",
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
@@ -103,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 MyTextField(
                   controller: confirmPasswordController,
-                  hintText: 'ConfirmPassword',
+                  hintText: 'Confirm Password',
                   obscureText: true,
                 ),
                 const SizedBox(
@@ -116,15 +116,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 50),
                 Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Divider(
                         thickness: 0.6,
-                        color: Colors.grey[400],
+                        color: Colors.white,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text('Or Continue With',
+                      child: Text('or Continue With',
                           style: TextStyle(color: Colors.grey[600])),
                     ),
                     Expanded(
@@ -142,9 +142,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     Squaretile(
                         imagePath: "lib/assets/images/google.png",
                         onTap: () => AuthService().signInWithGoogle()),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Squaretile(
-                        imagePath: "lib/assets/images/apple.png", onTap: () {})
+                        imagePath: "lib/assets/images/Apple_logo_white.png", onTap: () {})
                   ],
                 ),
                 const SizedBox(height: 50),
@@ -152,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "already a member ?",
+                      "Already a member?",
                       style: TextStyle(
                         color: Colors.white,
                       ),

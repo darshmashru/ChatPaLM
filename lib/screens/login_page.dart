@@ -78,8 +78,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                Text(
-                  "Welcome Back You've Have Been Missed !",
+                const Text(
+                  "Welcome to ChatPaLM!🎉🎉",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 MyTextField(
                   controller: emailController,
-                  hintText: "Username",
+                  hintText: "Username/Email",
                   obscureText: false,
                 ),
                 const SizedBox(
@@ -104,8 +104,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -130,9 +130,9 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.grey[400],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text('Or Continue With',
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text('or Continue With',
                           style: TextStyle(color: Colors.white)),
                     ),
                     Expanded(
@@ -151,9 +151,10 @@ class _LoginPageState extends State<LoginPage> {
                       imagePath: "lib/assets/images/google.png",
                       onTap: () => AuthService().signInWithGoogle(),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Squaretile(
-                      imagePath: "lib/assets/images/apple.png",
+                      // imagePath: "lib/assets/images/apple.png",
+                        imagePath: "lib/assets/images/Apple_logo_white.png",
                       onTap: () {},
                     )
                   ],
