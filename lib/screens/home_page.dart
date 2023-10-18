@@ -6,7 +6,7 @@ import 'package:ChatPaLM/screens/LoginOrRegister.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +50,8 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const AuthPage()),
                 );
               },
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 200.0, top: 10.0),
+              icon: const Padding(
+                padding: EdgeInsets.only(right: 200.0, top: 10.0),
                 child: Icon(
                   Icons.logout,
                   color: Colors.white,
@@ -65,10 +65,10 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
+              padding: const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
               child: Text(
                 "Hello $userEmailString!",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
@@ -102,7 +102,7 @@ class HomePage extends StatelessWidget {
               activeColor: Colors.white,
               tabBackgroundColor: Colors.grey.shade800,
               padding: EdgeInsets.all(16),
-              tabs: [
+              tabs: const [
                 GButton(
                   icon: Icons.search,
                   text: 'Search',

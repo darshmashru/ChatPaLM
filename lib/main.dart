@@ -20,11 +20,11 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       // ToDo: Change back to AuthPage() and add const to material app
-      // home: AuthPage(),
-      home: HomePage(),
+      home: AuthPage(),
+      // home: HomePage(),
     );
   }
 }
