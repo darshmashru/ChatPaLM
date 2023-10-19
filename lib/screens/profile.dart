@@ -6,9 +6,19 @@ import '../Components/BottomNavigationBarWidget.dart';
 import 'LoginOrRegister.dart';
 
 String apiKey = dotenv.env['PALM_API_KEY']!;
-class Profile extends StatelessWidget {
+
+final _obscureTextNotifier = ValueNotifier<bool>(true);
+final TextEditingController _apiTextController = TextEditingController();
+
+class Profile extends StatefulWidget {
   const Profile({super.key});
 
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  bool _obscureText = false;
   void signUserOut() async {
     await FirebaseAuth.instance.signOut();
   }
@@ -82,9 +92,9 @@ class Profile extends StatelessWidget {
                   Text(
                     "First Name",
                     style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
                   ),
                   Text(
                     "First Name",
@@ -118,59 +128,55 @@ class Profile extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 20.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "API Key",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                     ),
                   ),
-                  Text(
-                    "Hidden",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
+                  Expanded(
+                    child: TextField(
+                      style: const TextStyle(color: Colors.white),
+                      controller: _apiTextController,
+                      obscureText: _obscureText,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _apiTextController.text.isNotEmpty
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                            print(_obscureTextNotifier.value);
+                            print(_apiTextController.text);
+                          },
+                        ),
+                      ),
                     ),
-                    // onChanged: (value) {
-                    //   apiKey = value;
-                    // },
-                  )
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
+              child: const Text("Update API Key"),
               onPressed: () {
-                // Show input dialog
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Enter API Key"),
-                        content: TextField(
-                          onChanged: (value) {
-                            apiKey = value;
-                            print(apiKey);
-                          },
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text("OK"),
-                          ),
-                        ],
-                      );
-                    }
+                setState(
+                  () {
+                    apiKey = _apiTextController.text;
+                    print(apiKey);
+                  },
                 );
               },
-              child: const Text("Update API Key"),
             ),
           ],
         ),
