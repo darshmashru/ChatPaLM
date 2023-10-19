@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../Components/BottomNavigationBarWidget.dart';
+import '../widgets/BottomNavigationBarWidget.dart';
 import 'LoginOrRegister.dart';
 import 'package:ChatPaLM/globals.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
 import 'package:ChatPaLM/screens/LoginOrRegister.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:ChatPaLM/Components/BottomNavigationBarWidget.dart';
+import 'package:ChatPaLM/widgets/BottomNavigationBarWidget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
