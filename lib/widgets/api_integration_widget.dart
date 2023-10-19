@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
+import 'package:ChatPaLM/globals.dart';
 
 class ApiIntegrationWidget extends StatelessWidget {
   final TextEditingController _promptInputController = TextEditingController();
@@ -79,19 +80,19 @@ class ApiIntegrationWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                  width: 100.0,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      generateTextWithPrompt(
-                          promptString: _promptInputController.text);
-                    },
-                    child: const Text('Generate Text'),
+                width: 100.0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.white,
                   ),
+                  onPressed: () {
+                    generateTextWithPrompt(
+                        promptString: _promptInputController.text);
+                  },
+                  child: const Text('Generate Text'),
                 ),
+              ),
             ],
           )
         ],
@@ -102,7 +103,11 @@ class ApiIntegrationWidget extends StatelessWidget {
   Future<String> generateTextWithPrompt({
     required String promptString,
   }) async {
-    String apiKey = dotenv.env['PALM_API_KEY']!;
+    // API Key from .env file
+    // String apiKey = dotenv.env['PALM_API_KEY']!;
+
+    // API Key from globals.dart
+    String apiKey = PALM_API_KEY;
 
     String textModel = 'models/text-bison-001';
 

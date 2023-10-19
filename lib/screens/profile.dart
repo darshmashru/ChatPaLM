@@ -4,8 +4,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../Components/BottomNavigationBarWidget.dart';
 import 'LoginOrRegister.dart';
+import 'package:ChatPaLM/globals.dart';
 
-String apiKey = dotenv.env['PALM_API_KEY']!;
+// API Key from .env file
+// String apiKey = dotenv.env['PALM_API_KEY']!;
+
+// API Key from globals.dart
+String apiKey = PALM_API_KEY;
 
 final _obscureTextNotifier = ValueNotifier<bool>(true);
 final TextEditingController _apiTextController = TextEditingController();
@@ -170,10 +175,12 @@ class _ProfileState extends State<Profile> {
             ElevatedButton(
               child: const Text("Update API Key"),
               onPressed: () {
+                print("Old API Key:$PALM_API_KEY");
                 setState(
                   () {
                     apiKey = _apiTextController.text;
-                    print(apiKey);
+                    PALM_API_KEY = apiKey;
+                    print("New API Key:$apiKey");
                   },
                 );
               },
