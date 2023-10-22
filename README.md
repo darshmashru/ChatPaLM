@@ -1,16 +1,13 @@
-# chatpalm_app
+# Welcome to ChatPaLM!!
 
-A new Flutter project.
+A new Flutter project that enables you to assess PaLM from a Flutter application.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Create a .env file in the project roor when you clone this repo and insert the following:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+PALM_API_KEY = YOUR_API_KEY
+FIREBASE_WEB = YOUR_API_KEY
+FIREBASE_ANDROID = YOUR_API_KEY
+FIREBASE_IOS = YOUR_API_KEY
+FIREBASE_MACOS = YOUR_API_KEY
