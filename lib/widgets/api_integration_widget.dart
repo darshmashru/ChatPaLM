@@ -56,6 +56,8 @@ class ApiIntegrationWidget extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 25.0, vertical: 25.0),
                   child: TextField(
+                    minLines: 1,
+                    maxLines: 50,
                     style: const TextStyle(color: Colors.white),
                     controller: _promptInputController,
                     decoration: const InputDecoration(
