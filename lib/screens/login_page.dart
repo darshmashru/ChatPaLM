@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Colors.deepPurple,
+            backgroundColor: Color.fromRGBO(30, 30, 30, 1),
             title: Center(
               child: Text(
                 message,
@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(width: 10),
                     Squaretile(
                       // imagePath: "lib/assets/images/apple.png",
-                        imagePath: "lib/assets/images/Apple_logo_white.png",
+                      imagePath: "lib/assets/images/Apple_logo_white.png",
                       onTap: () {},
                     )
                   ],

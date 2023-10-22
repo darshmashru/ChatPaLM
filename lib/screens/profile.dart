@@ -49,18 +49,30 @@ class _ProfileState extends State<Profile> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             const Padding(
-              padding: EdgeInsets.only(top: 20.0),
+              padding: EdgeInsets.only(left: 10),
               child: Text(
                 "Profile",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 36,
+                  fontSize: 30,
                 ),
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Divider(
+              color: Colors.white,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
             const Padding(
-              padding: EdgeInsets.only(top: 20.0),
+              padding: EdgeInsets.only(left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -81,8 +93,11 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 50,
+            ),
             Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -103,8 +118,11 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 50,
+            ),
             Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -115,12 +133,27 @@ class _ProfileState extends State<Profile> {
                       fontSize: 24,
                     ),
                   ),
-                  Expanded(
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    width: 200,
                     child: TextField(
                       style: const TextStyle(color: Colors.white),
                       controller: _apiTextController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
+                        fillColor: Color.fromRGBO(30, 30, 30, 1),
+                        hintText: 'Enter API Key',
+                        hintStyle: TextStyle(color: Colors.white),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(30, 30, 30,
+                                1), // Change the highlight color to teal
+                            width: 2.0, // Adjust the border width as needed
+                          ),
+                        ),
+                        filled: true,
                         suffixIcon: IconButton(
                           icon: Icon(
                             _apiTextController.text.isNotEmpty
@@ -141,8 +174,19 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 50),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  Color.fromRGBO(30, 30, 30, 1),
+                ),
+                textStyle: MaterialStateProperty.all(
+                  const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
               child: const Text("Update API Key"),
               onPressed: () {
                 print("Old API Key:$PALM_API_KEY");
