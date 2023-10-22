@@ -65,6 +65,8 @@ FIREBASE_MACOS = YOUR_API_KEY
   <img width="323" alt="AuthPage" src="https://github.com/darshmashru/ChatPaLM/assets/70889682/ea68f010-3065-4c04-b65e-992efc46110f">
   <img width="323" alt="ProfilePage" src="https://github.com/darshmashru/ChatPaLM/assets/70889682/0c2c9a29-89bb-468b-8e13-06b1aa75cf91">
 </div>
+
+
 ## Authors
 
 - [@Darsh Mashru](https://www.github.com/darshmashru)
