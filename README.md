@@ -1,4 +1,6 @@
-# ChatPaLM
+
+https://github.com/darshmashru/ChatPaLM/assets/70889682/f75debcf-6c8e-4e64-87d6-19391996e9b9
+
 
 ## Introduction :-
 
@@ -56,6 +58,7 @@ FIREBASE_MACOS = YOUR_API_KEY
 ```
 
 ## Demonstration
+<img width="323" alt="Screenshot 2023-10-22 at 11 00 02 PM" src="https://github.com/darshmashru/ChatPaLM/assets/70889682/3f768931-9aef-46d2-b655-c4b84c2e25fc">
 
 ## Authors
 
