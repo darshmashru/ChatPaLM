@@ -23,7 +23,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  bool _obscureText = false;
+  bool _obscureText = true;
   void signUserOut() async {
     await FirebaseAuth.instance.signOut();
   }
@@ -136,17 +136,17 @@ class _ProfileState extends State<Profile> {
                   const SizedBox(
                     height: 50,
                   ),
-                  Container(
+                  SizedBox(
                     width: 200,
                     child: TextField(
                       style: const TextStyle(color: Colors.white),
                       controller: _apiTextController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
-                        fillColor: Color.fromRGBO(30, 30, 30, 1),
+                        fillColor: const Color.fromRGBO(30, 30, 30, 1),
                         hintText: 'Enter API Key',
-                        hintStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
+                        hintStyle: const TextStyle(color: Colors.white),
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color.fromRGBO(30, 30, 30,
                                 1), // Change the highlight color to teal
@@ -178,7 +178,7 @@ class _ProfileState extends State<Profile> {
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                  Color.fromRGBO(30, 30, 30, 1),
+                  const Color.fromRGBO(30, 30, 30, 1),
                 ),
                 textStyle: MaterialStateProperty.all(
                   const TextStyle(
