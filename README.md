@@ -19,5 +19,8 @@ FIREBASE_MACOS = YOUR_API_KEY
 
 ## Screenshots
 
-![Authentication](https://imgur.com/t2G7HZI)
+![Authentication](https://i.imgur.com/t2G7HZI.png?1)
+![Home Page](https://i.imgur.com/oYRyYt4.png))
+![Home Page](https://i.imgur.com/BSUHfFM.png))
+![Home Page](https://i.imgur.com/96tru3J.png))
 ![Home Page](https://i.imgur.com/2MukTcz.png)
