@@ -1,23 +1,21 @@
 import 'package:ChatPaLM/Routes/app_route_config.dart';
-import 'package:ChatPaLM/screens/auth_page.dart';
-import 'package:ChatPaLM/screens/home_page.dart';
-import "package:flutter/material.dart";
-import 'package:ChatPaLM/screens/login_page.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
+  await dotenv.load(fileName: ".env");
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await dotenv.load(fileName: ".env");
   runApp(const Myapp());
 }
 
 class Myapp extends StatelessWidget {
-  const Myapp({super.key});
+  const Myapp();
 
   @override
   Widget build(BuildContext context) {

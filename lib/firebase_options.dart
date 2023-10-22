@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -14,11 +16,13 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
+
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;
     }
+
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -43,8 +47,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBqeMyr6cRjhydbn7OwjaWS7kFcJjE6e5Y',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.get('FIREBASE_WEB'),
     appId: '1:317796345447:web:6f5ad8db419dd3b43056c2',
     messagingSenderId: '317796345447',
     projectId: 'chatpalm-612da',
@@ -53,31 +57,33 @@ class DefaultFirebaseOptions {
     measurementId: 'G-ZV69R7QREY',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBy7SeATK_g5i3yi6-y8E9PutfugOw6Tdc',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.get('FIREBASE_ANDROID'),
     appId: '1:317796345447:android:ffcd4e2f9f6c899e3056c2',
     messagingSenderId: '317796345447',
     projectId: 'chatpalm-612da',
     storageBucket: 'chatpalm-612da.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA_gOOffTaX3z5DmsCVjfdQgV7xT5moaF4',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.get('FIREBASE_IOS'),
     appId: '1:317796345447:ios:b136a6176b197a6c3056c2',
     messagingSenderId: '317796345447',
     projectId: 'chatpalm-612da',
     storageBucket: 'chatpalm-612da.appspot.com',
-    iosClientId: '317796345447-rba76hi01d27glapnkonlqc3bdu12edf.apps.googleusercontent.com',
+    iosClientId:
+        '317796345447-rba76hi01d27glapnkonlqc3bdu12edf.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatpalmApp',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyA_gOOffTaX3z5DmsCVjfdQgV7xT5moaF4',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.get('FIREBASE_MACOS'),
     appId: '1:317796345447:ios:193f6383e9d595cc3056c2',
     messagingSenderId: '317796345447',
     projectId: 'chatpalm-612da',
     storageBucket: 'chatpalm-612da.appspot.com',
-    iosClientId: '317796345447-8j55g66ksavc5gqkpc3145k98pfef0e4.apps.googleusercontent.com',
+    iosClientId:
+        '317796345447-8j55g66ksavc5gqkpc3145k98pfef0e4.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatpalmApp.RunnerTests',
   );
 }
