@@ -1,3 +1,5 @@
+# ChatPaLM
+
 
 https://github.com/darshmashru/ChatPaLM/assets/70889682/f75debcf-6c8e-4e64-87d6-19391996e9b9
 
@@ -58,8 +60,11 @@ FIREBASE_MACOS = YOUR_API_KEY
 ```
 
 ## Demonstration
-<img width="323" alt="Screenshot 2023-10-22 at 11 00 02 PM" src="https://github.com/darshmashru/ChatPaLM/assets/70889682/3f768931-9aef-46d2-b655-c4b84c2e25fc">
-
+<div style="display: flex; justify-content: space-around;">
+  <img width="323" alt="Main_Page" src="https://github.com/darshmashru/ChatPaLM/assets/70889682/3f768931-9aef-46d2-b655-c4b84c2e25fc">
+  <img width="323" alt="AuthPage" src="https://github.com/darshmashru/ChatPaLM/assets/70889682/ea68f010-3065-4c04-b65e-992efc46110f">
+  <img width="323" alt="ProfilePage" src="https://github.com/darshmashru/ChatPaLM/assets/70889682/0c2c9a29-89bb-468b-8e13-06b1aa75cf91">
+</div>
 ## Authors
 
 - [@Darsh Mashru](https://www.github.com/darshmashru)
