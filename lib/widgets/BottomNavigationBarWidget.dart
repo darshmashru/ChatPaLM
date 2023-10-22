@@ -1,11 +1,20 @@
 import 'package:ChatPaLM/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:go_router/go_router.dart';
 
 import '../screens/profile.dart';
 
-class BottomNavigationBarWidget extends StatelessWidget {
+class BottomNavigationBarWidget extends StatefulWidget {
   const BottomNavigationBarWidget({super.key});
+
+  @override
+  State<BottomNavigationBarWidget> createState() =>
+      _BottomNavigationBarWidgetState();
+}
+
+class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
+  int mycurrentindex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -22,33 +31,26 @@ class BottomNavigationBarWidget extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           tabs: [
             GButton(
-              icon: Icons.search,
-              text: 'Search',
-              onPressed: () {
-                //write your script
-              },
-            ),
-            GButton(
               icon: Icons.home,
               text: 'Home',
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
+                context.go('/home');
               },
             ),
             GButton(
               icon: Icons.person,
               text: 'Profile',
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Profile()),
-                );
+                context.go('/profile');
               },
             ),
           ],
+          selectedIndex: mycurrentindex,
+          onTabChange: (index) {
+            setState(() {
+              mycurrentindex = index;
+            });
+          },
         ),
       ),
     );

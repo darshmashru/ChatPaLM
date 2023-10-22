@@ -34,6 +34,7 @@ class _ProfileState extends State<Profile> {
         MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // Define the primary color and text themes for dark mode
         brightness: isDarkMode ? Brightness.dark : Brightness.light,
@@ -45,37 +46,6 @@ class _ProfileState extends State<Profile> {
       ),
       home: Scaffold(
         backgroundColor: Colors.black,
-        appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(top: 22.0),
-            child: Image.asset(
-              "lib/assets/logos/image 7.png",
-              height: 50,
-            ),
-          ),
-          backgroundColor: Colors.black,
-          actions: [
-            IconButton(
-              onPressed: () {
-                signUserOut();
-                Navigator.push(
-                  context,
-                  // MaterialPageRoute(builder: (context) => AuthPage()),
-                  MaterialPageRoute(
-                      builder: (context) => const LoginOrRegisterPage()),
-                );
-              },
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 200.0, top: 10.0),
-                child: Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                  size: 36,
-                ),
-              ),
-            )
-          ],
-        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -187,7 +157,6 @@ class _ProfileState extends State<Profile> {
             ),
           ],
         ),
-        bottomNavigationBar: const BottomNavigationBarWidget(),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:ChatPaLM/Routes/app_route_config.dart';
 import 'package:ChatPaLM/screens/auth_page.dart';
 import 'package:ChatPaLM/screens/home_page.dart';
 import "package:flutter/material.dart";
@@ -20,10 +21,10 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      home: AuthPage(),
-      // home: HomePage(),
+      routeInformationParser: MyAppRouter().router.routeInformationParser,
+      routerDelegate: MyAppRouter().router.routerDelegate,
     );
   }
 }
