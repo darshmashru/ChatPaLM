@@ -32,75 +32,80 @@ class _HomePageState extends State<HomePage> {
     String userEmailString =
         FirebaseAuth.instance.currentUser!.email!.toString();
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(top: 22.0),
-          child: Image.asset(
-            "lib/assets/logos/image 7.png",
-            height: 50,
-          ),
-        ),
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
         backgroundColor: Colors.black,
-        actions: [
-          IconButton(
-            onPressed: () {
-              signUserOut();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const LoginOrRegisterPage()),
-              );
-            },
-            icon: const Padding(
-              padding: EdgeInsets.only(right: 200.0, top: 10.0),
-              child: Icon(
-                Icons.logout,
-                color: Colors.white,
-                size: 36,
-              ),
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(top: 22.0),
+            child: Image.asset(
+              "lib/assets/logos/image 7.png",
+              height: 50,
             ),
-          )
-        ],
-      ),
-      body: PageView(
-        controller: _pageController,
-        children: [
-          buildHomePage(userEmailString),
-          const Profile(),
-        ],
-        onPageChanged: (index) {
-          setState(() {
-            myIndex = index;
-          });
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        fixedColor: Colors.white,
-        unselectedItemColor: Color.fromRGBO(149, 149, 149, 1),
-        onTap: (index) {
-          setState(() {
-            myIndex = index;
-            _pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.ease);
-          });
-        },
-        currentIndex: myIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-            backgroundColor: Colors.black,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Profile",
-            backgroundColor: Colors.black,
-          ),
-        ],
+          backgroundColor: Colors.black,
+          actions: [
+            IconButton(
+              onPressed: () {
+                signUserOut();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const LoginOrRegisterPage()),
+                );
+              },
+              icon: const Padding(
+                padding: EdgeInsets.only(right: 200.0, top: 10.0),
+                child: Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                  size: 36,
+                ),
+              ),
+            )
+          ],
+        ),
+        body: PageView(
+          controller: _pageController,
+          children: [
+            buildHomePage(userEmailString),
+            const Profile(),
+          ],
+          onPageChanged: (index) {
+            setState(() {
+              myIndex = index;
+            });
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.black,
+          fixedColor: Colors.white,
+          unselectedItemColor: Color.fromRGBO(149, 149, 149, 1),
+          onTap: (index) {
+            setState(() {
+              myIndex = index;
+              _pageController.animateToPage(index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.ease);
+            });
+          },
+          currentIndex: myIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+              backgroundColor: Colors.black,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "Profile",
+              backgroundColor: Colors.black,
+            ),
+          ],
+        ),
       ),
     );
   }
