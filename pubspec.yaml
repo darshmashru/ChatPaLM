@@ -42,7 +42,11 @@ dependencies:
   http: ^1.1.0
   flutter_dotenv: ^5.1.0
   google_nav_bar: ^5.0.6
+<<<<<<< Updated upstream
 
+=======
+  dash_bubble: ^2.0.0
+>>>>>>> Stashed changes
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -69,6 +73,8 @@ flutter:
     - lib/assets/images/
     - lib/assets/logos/PaLM_logo.svg
     - lib/assets/logos/
+    - lib/assets/logos/image 7.png
+    - lib/assets/logos/logopalm.png
     - .env
   #   - images/a_dot_ham.jpeg
 

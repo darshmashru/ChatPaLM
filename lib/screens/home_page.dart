@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
 import 'package:ChatPaLM/screens/auth_page.dart';
+=======
+import 'package:ChatPaLM/screens/bubble_working.dart';
+import 'package:flutter/material.dart';
+>>>>>>> Stashed changes
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
@@ -65,6 +70,7 @@ class HomePage extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+<<<<<<< Updated upstream
             Padding(
               padding: const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
               child: Text(
@@ -90,6 +96,11 @@ class HomePage extends StatelessWidget {
             Expanded(
               child: ApiIntegrationWidget(),
             ),
+=======
+            buildHomePage(userEmailString),
+            const Profile(),
+            const BubbleWorkingPage(),
+>>>>>>> Stashed changes
           ],
         ),
         bottomNavigationBar: Container(
@@ -118,7 +129,21 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
+<<<<<<< Updated upstream
           ),
+=======
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "Profile",
+              backgroundColor: Colors.black,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings), // Add a new icon for the SettingsPage
+              label: "Settings", // Label for the SettingsPage
+              backgroundColor: Colors.black,
+            ),
+          ],
+>>>>>>> Stashed changes
         ),
       ),
     );
