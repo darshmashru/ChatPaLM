@@ -1,16 +1,15 @@
+import 'package:ChatPaLM/env/env.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import '../widgets/BottomNavigationBarWidget.dart';
 import 'LoginOrRegister.dart';
 import 'package:ChatPaLM/globals.dart';
 
-// API Key from .env file
-// String apiKey = dotenv.env['PALM_API_KEY']!;
+// API Key from Envied .env file
+String apiKey = Env.palmApiKey;
 
 // API Key from globals.dart
-String apiKey = PALM_API_KEY;
+// String apiKey = PALM_API_KEY;
 
 final _obscureTextNotifier = ValueNotifier<bool>(true);
 final TextEditingController _apiTextController = TextEditingController();

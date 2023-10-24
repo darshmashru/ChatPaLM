@@ -41,8 +41,8 @@ dependencies:
   google_sign_in: ^6.1.5
   google_generative_language_api: ^0.2.1
   http: ^1.1.0
-  flutter_dotenv: ^5.1.0
   google_nav_bar: ^5.0.6
+  envied: ^0.3.0+3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -54,6 +54,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.11.0
+  envied_generator: ^0.3.0+3
+  build_runner: ^2.4.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

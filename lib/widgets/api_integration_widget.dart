@@ -1,5 +1,6 @@
+import 'package:ChatPaLM/env/env.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
 import 'package:ChatPaLM/globals.dart';
 
@@ -105,11 +106,11 @@ class ApiIntegrationWidget extends StatelessWidget {
   Future<String> generateTextWithPrompt({
     required String promptString,
   }) async {
-    // API Key from .env file
-    // String apiKey = dotenv.env['PALM_API_KEY']!;
+    // API Key from Envied .env file
+    String apiKey = Env.palmApiKey;
 
     // API Key from globals.dart
-    String apiKey = PALM_API_KEY;
+    // String apiKey = PALM_API_KEY;
 
     String textModel = 'models/text-bison-001';
 
