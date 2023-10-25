@@ -1,3 +1,4 @@
+import 'package:ChatPaLM/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ChatPaLM/screens/profile.dart';
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             buildHomePage(userEmailString),
             const Profile(),
+            const Settings(),
           ],
           onPageChanged: (index) {
             setState(() {
@@ -102,6 +104,11 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: "Profile",
+              backgroundColor: Colors.black,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: "Settings",
               backgroundColor: Colors.black,
             ),
           ],

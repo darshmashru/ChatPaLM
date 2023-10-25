@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   flutter_svg: ^0.22.0
   go_router: ^5.2.0
+  dash_bubble: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
