@@ -114,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                     context,
                     bubbleOptions: BubbleOptions(
                       // notificationIcon: 'github_bubble',
-                      bubbleIcon: 'github_bubble',
+                      bubbleIcon: 'palm',
                       // closeIcon: 'github_bubble',
                       startLocationX: 0,
                       startLocationY: 100,
