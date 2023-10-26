@@ -1,5 +1,6 @@
 import 'package:ChatPaLM/env/env.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
 import 'package:ChatPaLM/globals.dart';
@@ -16,36 +17,51 @@ class ApiIntegrationWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxHeight: 350.0,
-              ),
-              child: SingleChildScrollView(
-                child: TextField(
-                  style: const TextStyle(color: Colors.white),
-                  maxLines: null,
-                  enabled: false,
-                  controller: _promptOutputController,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.black,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: TextField(
+                    style: const TextStyle(color: Colors.white),
+                    maxLines: null,
+                    enabled: false,
+                    controller: _promptOutputController,
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.black,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    hintText: "Output text",
-                    hintStyle: TextStyle(
-                      color: Colors.white, // Set the text color to white
+                      hintText: "Output text",
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.white,
+                    onPressed: () {
+                      final text = _promptOutputController.text;
+                      Clipboard.setData(ClipboardData(text: text));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Copied to Clipboard'))
+                      );
+                    },
+                    child: const Icon(Icons.copy_rounded),
+                  ),
+                ),
+              ], // children:
             ),
           ),
           Row(
@@ -93,7 +109,7 @@ class ApiIntegrationWidget extends StatelessWidget {
                     generateTextWithPrompt(
                         promptString: _promptInputController.text);
                   },
-                  child: const Text('Generate Text'),
+                  child: const Text('Ask'),
                 ),
               ),
             ],
