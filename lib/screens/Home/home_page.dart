@@ -1,3 +1,4 @@
+import 'package:ChatPaLM/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ChatPaLM/screens/Profile/profile.dart';
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.black,
           fixedColor: Colors.white,
-          unselectedItemColor: Color.fromRGBO(149, 149, 149, 1),
+          unselectedItemColor: const Color.fromRGBO(149, 149, 149, 1),
           onTap: (index) {
             setState(() {
               myIndex = index;
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
           child: Text(
-            "Hello $userEmailString!",
+            "Hello $USER_NAME!",
             style: const TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
