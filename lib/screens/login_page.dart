@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 MyTextField(
                   controller: emailController,
-                  hintText: "Username/Email",
+                  hintText: "Email",
                   obscureText: false,
                 ),
                 const SizedBox(
@@ -152,12 +152,12 @@ class _LoginPageState extends State<LoginPage> {
                       imagePath: "lib/assets/images/google.png",
                       onTap: () => AuthService().signInWithGoogle(),
                     ),
-                    const SizedBox(width: 10),
-                    Squaretile(
-                      // imagePath: "lib/assets/images/apple.png",
-                      imagePath: "lib/assets/images/Apple_logo_white.png",
-                      onTap: () {},
-                    )
+                    // const SizedBox(width: 10),
+                    // Squaretile(
+                    //   // imagePath: "lib/assets/images/apple.png",
+                    //   imagePath: "lib/assets/images/Apple_logo_white.png",
+                    //   onTap: () {},
+                    // )
                   ],
                 ),
                 const SizedBox(height: 50),
