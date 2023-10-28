@@ -122,10 +122,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.white,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text('or Continue With',
-                          style: TextStyle(color: Colors.grey[600])),
+                          style: TextStyle(color: Colors.white)),
                     ),
                     Expanded(
                       child: Divider(
@@ -142,9 +142,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     Squaretile(
                         imagePath: "lib/assets/images/google.png",
                         onTap: () => AuthService().signInWithGoogle()),
-                    const SizedBox(width: 10),
-                    Squaretile(
-                        imagePath: "lib/assets/images/Apple_logo_white.png", onTap: () {})
+                    // const SizedBox(width: 10),
+                    // Squaretile(
+                    //     imagePath: "lib/assets/images/Apple_logo_white.png", onTap: () {})
                   ],
                 ),
                 const SizedBox(height: 50),
