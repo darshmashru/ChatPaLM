@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ChatPaLM/screens/profile.dart';
+import 'package:ChatPaLM/screens/Profile/profile.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
-import 'package:ChatPaLM/screens/LoginOrRegister.dart';
-import 'package:ChatPaLM/widgets/BottomNavigationBarWidget.dart';
+import 'package:ChatPaLM/screens/Authentication/LoginOrRegister.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

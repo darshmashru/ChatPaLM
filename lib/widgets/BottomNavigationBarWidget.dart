@@ -1,9 +1,6 @@
-import 'package:ChatPaLM/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:go_router/go_router.dart';
-
-import '../screens/profile.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
   const BottomNavigationBarWidget({super.key});

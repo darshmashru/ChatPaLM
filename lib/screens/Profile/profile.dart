@@ -1,8 +1,6 @@
 import 'package:ChatPaLM/env/env.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../widgets/BottomNavigationBarWidget.dart';
-import 'LoginOrRegister.dart';
 import 'package:ChatPaLM/globals.dart';
 
 // API Key from Envied .env file
