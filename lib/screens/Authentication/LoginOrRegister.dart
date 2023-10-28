@@ -1,5 +1,5 @@
-import 'package:ChatPaLM/screens/login_page.dart';
-import 'package:ChatPaLM/screens/register_page.dart';
+import 'package:ChatPaLM/screens/Authentication/login_page.dart';
+import 'package:ChatPaLM/screens/Authentication/register_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginOrRegisterPage extends StatefulWidget {

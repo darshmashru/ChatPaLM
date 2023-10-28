@@ -1,9 +1,6 @@
 import 'package:ChatPaLM/env/env.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../widgets/BottomNavigationBarWidget.dart';
-import 'LoginOrRegister.dart';
 import 'package:ChatPaLM/globals.dart';
 
 // API Key from Envied .env file
@@ -14,7 +11,6 @@ String apiKey = Env.palmApiKey;
 
 final _obscureTextNotifier = ValueNotifier<bool>(true);
 final TextEditingController _apiTextController = TextEditingController();
-final TextEditingController _nameTextController = TextEditingController();
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -60,7 +56,6 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
-                  fontWeight: FontWeight.bold
                 ),
               ),
             ),
@@ -71,88 +66,75 @@ class _ProfileState extends State<Profile> {
               color: Colors.white,
             ),
             const SizedBox(
-              height: 30,
+              height: 50,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
+            const Padding(
+              padding: EdgeInsets.only(left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Name",
-                    style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 175,
-                    child: TextField(
-                      style: const TextStyle(color: Colors.white),
-                      controller: _nameTextController,
-                      // obscureText: _obscureText,
-                      decoration: const InputDecoration(
-                        fillColor: Color.fromRGBO(30, 30, 30, 1),
-                        hintText: 'Enter Name',
-                        hintStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(30, 30, 30,
-                                1), // Change the highlight color to teal
-                            width: 2.0, // Adjust the border width as needed
-                          ),
-                        ),
-                        filled: true,
-                      ),
+                    "First Name",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
                     ),
                   ),
-                  // ],
-                  //   ),
-                  // ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   Text(
-                    "Email",
-                    style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  Text(
-                    FirebaseAuth.instance.currentUser!.email!.toString() ??
-                        'N/A',
-                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
+                    "First Name",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
                   )
                 ],
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 50,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("API Key",
-                      style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
+                  const Text(
+                    "Email",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                  Text(
+                    FirebaseAuth.instance.currentUser!.email!.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "API Key",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
                   const SizedBox(
-                    height: 30,
+                    height: 50,
                   ),
                   SizedBox(
-                    width: 175,
+                    width: 200,
                     child: TextField(
                       style: const TextStyle(color: Colors.white),
                       controller: _apiTextController,
@@ -190,30 +172,6 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             const SizedBox(height: 50),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(30, 30, 30, 1),
-                ),
-                textStyle: MaterialStateProperty.all(
-                  const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              child: const Text("Update Name"),
-              onPressed: () {
-                print("Old Name:$USER_NAME");
-                setState(
-                  () {
-                    USER_NAME = _nameTextController.text;
-                    // PALM_API_KEY = apiKey;
-                    print("New Name:$USER_NAME");
-                  },
-                );
-              },
-            ),
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(

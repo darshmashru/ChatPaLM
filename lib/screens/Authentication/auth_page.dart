@@ -1,6 +1,6 @@
-import 'package:ChatPaLM/screens/LoginOrRegister.dart';
-import 'package:ChatPaLM/screens/home_page.dart';
-import 'package:ChatPaLM/screens/login_page.dart';
+import 'package:ChatPaLM/screens/Authentication/LoginOrRegister.dart';
+import 'package:ChatPaLM/screens/Home/home_page.dart';
+import 'package:ChatPaLM/screens/Authentication/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
