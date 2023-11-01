@@ -4,34 +4,24 @@ import 'package:flutter/services.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-class ApiIntegrationWidget extends StatelessWidget {
+class ApiIntegrationWidget extends StatefulWidget {
+  const ApiIntegrationWidget({Key? key}) : super(key: key);
+
+  @override
+  _ApiIntegrationWidgetState createState() => _ApiIntegrationWidgetState();
+}
+
+class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget> with AutomaticKeepAliveClientMixin {
   final TextEditingController _promptInputController = TextEditingController();
   final TextEditingController _promptOutputController = TextEditingController();
-  String mdText = '''
-  ## Header 1
-This is some text under the header 1.
+  String mdText = "";
 
-### Header 2
+void updateText(String newText) {
+  setState(() {
+    mdText = newText;
+  });
+}
 
-This is some text under the header 2.
-
-#### Header 3
-
-This is some text under the header 3.
-
-**Bold text**
-
-*Italic text*
-
-~~Strikethrough text~~
-
-[Link to Google](https://www.google.com)
-
-```
-This is some code
-```
-''';
-  ApiIntegrationWidget({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,10 +189,13 @@ This is some code
       request: textRequest,
       apiKey: apiKey,
     );
-    print(response.candidates.map((candidate) => candidate.output).join('\n'));
+    // print(response.candidates.map((candidate) => candidate.output).join('\n'));
     _promptOutputController.text =
         response.candidates.map((candidate) => candidate.output).join('\n');
-    mdText = _promptOutputController.text;
+    // mdText = _promptOutputController.text;
+    updateText(_promptOutputController.text);
+    print("Markdown text: ");
+    print(mdText);
 
     // Extract and return the generated text
     if (response.candidates.isNotEmpty) {
@@ -212,4 +205,7 @@ This is some code
 
     return '';
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
