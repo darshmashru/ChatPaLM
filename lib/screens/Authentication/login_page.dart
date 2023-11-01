@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
 
       // Redirect to the home_page.dart file
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       showErrorMessage(e.code);

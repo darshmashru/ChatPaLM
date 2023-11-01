@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ChatPaLM/screens/Profile/profile.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
 import 'package:ChatPaLM/screens/Authentication/LoginOrRegister.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,6 +22,18 @@ class _HomePageState extends State<HomePage> {
     _pageController.dispose();
     super.dispose();
   }
+  @override
+  void initState() {
+  super.initState();
+  _loadUserName();
+}
+
+void _loadUserName() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  setState(() {
+    USER_NAME_GLOBAL = prefs.getString('userName') ?? '';
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +130,7 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
           child: Text(
-            "Hello $USER_NAME!",
+            "Hello $USER_NAME_GLOBAL!",
             style: const TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -136,7 +149,7 @@ class _HomePageState extends State<HomePage> {
         const Divider(
           color: Colors.white,
         ),
-        Expanded(
+        const Expanded(
           child: ApiIntegrationWidget(),
         ),
       ],

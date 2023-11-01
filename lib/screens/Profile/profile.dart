@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ChatPaLM/globals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // API Key from Envied .env file
 String apiKey = Env.palmApiKey;
@@ -25,6 +26,24 @@ class _ProfileState extends State<Profile> {
   bool _obscureText = true;
   void signUserOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  void _loadUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      USER_NAME_GLOBAL = prefs.getString('userName') ?? '';
+    });
+  }
+
+  void _saveName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userName', USER_NAME_GLOBAL);
   }
 
   @override
@@ -56,10 +75,9 @@ class _ProfileState extends State<Profile> {
               child: Text(
                 "Profile",
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold
-                ),
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(
@@ -104,9 +122,6 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                  // ],
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -202,14 +217,12 @@ class _ProfileState extends State<Profile> {
               ),
               child: const Text("Update Name"),
               onPressed: () {
-                print("Old Name:$USER_NAME");
-                setState(
-                  () {
-                    USER_NAME = _nameTextController.text;
-                    // PALM_API_KEY = apiKey;
-                    print("New Name:$USER_NAME");
-                  },
-                );
+                print("Old Name:$USER_NAME_GLOBAL");
+                setState(() {
+                  USER_NAME_GLOBAL = _nameTextController.text;
+                  _saveName();
+                });
+                print("New Name:$USER_NAME_GLOBAL");
               },
             ),
             ElevatedButton(
