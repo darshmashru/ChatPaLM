@@ -1,13 +1,36 @@
 import 'package:ChatPaLM/env/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
-import 'package:ChatPaLM/globals.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class ApiIntegrationWidget extends StatelessWidget {
   final TextEditingController _promptInputController = TextEditingController();
   final TextEditingController _promptOutputController = TextEditingController();
+  String mdText = '''
+  ## Header 1
+This is some text under the header 1.
+
+### Header 2
+
+This is some text under the header 2.
+
+#### Header 3
+
+This is some text under the header 3.
+
+**Bold text**
+
+*Italic text*
+
+~~Strikethrough text~~
+
+[Link to Google](https://www.google.com)
+
+```
+This is some code
+```
+''';
   ApiIntegrationWidget({super.key});
   @override
   Widget build(BuildContext context) {
@@ -20,28 +43,34 @@ class ApiIntegrationWidget extends StatelessWidget {
             child: Stack(
               children: [
                 SingleChildScrollView(
-                  child: TextField(
-                    style: const TextStyle(color: Colors.white),
-                    maxLines: null,
-                    enabled: false,
-                    controller: _promptOutputController,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.black,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      hintText: "Output text",
-                      hintStyle: TextStyle(
-                        color: Colors.white,
-                      ),
+                  // child: TextField(
+                  //   style: const TextStyle(color: Colors.white),
+                  //   maxLines: null,
+                  //   enabled: false,
+                  //   controller: _promptOutputController,
+                  //   decoration: const InputDecoration(
+                  //     filled: true,
+                  //     fillColor: Colors.black,
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderSide: BorderSide(
+                  //         color: Colors.black,
+                  //       ),
+                  //     ),
+                  //     focusedBorder: OutlineInputBorder(
+                  //       borderSide: BorderSide(
+                  //         color: Colors.black,
+                  //       ),
+                  //     ),
+                  //     hintText: "Output text",
+                  //     hintStyle: TextStyle(
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                  // ),
+                  child: MarkdownBody(
+                    data: mdText,
+                    styleSheet: MarkdownStyleSheet(
+                      p: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -55,8 +84,7 @@ class ApiIntegrationWidget extends StatelessWidget {
                       final text = _promptOutputController.text;
                       Clipboard.setData(ClipboardData(text: text));
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Copied to Clipboard'))
-                      );
+                          const SnackBar(content: Text('Copied to Clipboard')));
                     },
                     child: const Icon(Icons.copy_rounded),
                   ),
@@ -174,6 +202,7 @@ class ApiIntegrationWidget extends StatelessWidget {
     print(response.candidates.map((candidate) => candidate.output).join('\n'));
     _promptOutputController.text =
         response.candidates.map((candidate) => candidate.output).join('\n');
+    mdText = _promptOutputController.text;
 
     // Extract and return the generated text
     if (response.candidates.isNotEmpty) {

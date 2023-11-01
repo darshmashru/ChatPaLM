@@ -44,6 +44,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   envied: ^0.3.0+3
   google_fonts: ^6.1.0
+  flutter_markdown: ^0.6.18
 dev_dependencies:
   flutter_test:
     sdk: flutter
