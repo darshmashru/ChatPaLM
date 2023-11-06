@@ -1,7 +1,9 @@
 import 'package:ChatPaLM/env/env.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ChatPaLM/globals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // API Key from Envied .env file
 String apiKey = Env.palmApiKey;
@@ -11,6 +13,7 @@ String apiKey = Env.palmApiKey;
 
 final _obscureTextNotifier = ValueNotifier<bool>(true);
 final TextEditingController _apiTextController = TextEditingController();
+final TextEditingController _nameTextController = TextEditingController();
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -23,6 +26,24 @@ class _ProfileState extends State<Profile> {
   bool _obscureText = true;
   void signUserOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  void _loadUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      USER_NAME_GLOBAL = prefs.getString('userName') ?? '';
+    });
+  }
+
+  void _saveName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userName', USER_NAME_GLOBAL);
   }
 
   @override
@@ -42,111 +63,132 @@ class _ProfileState extends State<Profile> {
         ),
       ),
       home: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 20,
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 10),
               child: Text(
                 "Profile",
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                ),
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            const Divider(
-              color: Colors.white,
+            Divider(
+              color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(
-              height: 50,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "First Name",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  Text(
-                    "First Name",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 50,
+              height: 30,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Email",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
                   Text(
-                    FirebaseAuth.instance.currentUser!.email!.toString(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
+                    "Name",
+                    style: GoogleFonts.inter(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "API Key",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 50,
                   ),
                   SizedBox(
-                    width: 200,
+                    width: 175,
                     child: TextField(
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
+                      controller: _nameTextController,
+                      // obscureText: _obscureText,
+                      decoration: InputDecoration(
+                        fillColor: Theme.of(context).colorScheme.background,
+                        hintText: 'Enter Name',
+                        hintStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.background,
+                            width: 2.0, // Adjust the border width as needed
+                          ),
+                        ),
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Email",
+                    style: GoogleFonts.inter(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  Text(
+                    FirebaseAuth.instance.currentUser!.email!.toString() ??
+                        'N/A',
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("API Key",
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      )),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SizedBox(
+                    width: 175,
+                    child: TextField(
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       controller: _apiTextController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
-                        fillColor: const Color.fromRGBO(30, 30, 30, 1),
+                        fillColor: Theme.of(context).colorScheme.background,
                         hintText: 'Enter API Key',
-                        hintStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: const OutlineInputBorder(
+                        hintStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color.fromRGBO(30, 30, 30,
-                                1), // Change the highlight color to teal
+                            color: Theme.of(context)
+                                .colorScheme
+                                .background, // Change the highlight color to teal
                             width: 2.0, // Adjust the border width as needed
                           ),
                         ),
@@ -175,11 +217,33 @@ class _ProfileState extends State<Profile> {
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(30, 30, 30, 1),
+                  Theme.of(context).colorScheme.secondary,
                 ),
                 textStyle: MaterialStateProperty.all(
-                  const TextStyle(
-                    color: Colors.white,
+                  TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              child: const Text("Update Name"),
+              onPressed: () {
+                print("Old Name:$USER_NAME_GLOBAL");
+                setState(() {
+                  USER_NAME_GLOBAL = _nameTextController.text;
+                  _saveName();
+                });
+                print("New Name:$USER_NAME_GLOBAL");
+              },
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  Theme.of(context).colorScheme.secondary,
+                ),
+                textStyle: MaterialStateProperty.all(
+                  TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 20,
                   ),
                 ),

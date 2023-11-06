@@ -1,18 +1,33 @@
 import 'package:ChatPaLM/env/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
-import 'package:ChatPaLM/globals.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
-class ApiIntegrationWidget extends StatelessWidget {
+class ApiIntegrationWidget extends StatefulWidget {
+  const ApiIntegrationWidget({Key? key}) : super(key: key);
+
+  @override
+  _ApiIntegrationWidgetState createState() => _ApiIntegrationWidgetState();
+}
+
+class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
+    with AutomaticKeepAliveClientMixin {
   final TextEditingController _promptInputController = TextEditingController();
   final TextEditingController _promptOutputController = TextEditingController();
-  ApiIntegrationWidget({super.key});
+  String mdText = "";
+
+  void updateText(String newText) {
+    setState(() {
+      mdText = newText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -20,27 +35,18 @@ class ApiIntegrationWidget extends StatelessWidget {
             child: Stack(
               children: [
                 SingleChildScrollView(
-                  child: TextField(
-                    style: const TextStyle(color: Colors.white),
-                    maxLines: null,
-                    enabled: false,
-                    controller: _promptOutputController,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.black,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      hintText: "Output text",
-                      hintStyle: TextStyle(
-                        color: Colors.white,
+                  child: MarkdownBody(
+                    data: mdText,
+                    styleSheet: MarkdownStyleSheet(
+                      h1: const TextStyle(color: Colors.red, fontSize: 24),
+                      h2: const TextStyle(color: Colors.orange, fontSize: 20),
+                      p: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
+                      codeblockDecoration: BoxDecoration(
+                        color:
+                            Colors.grey[200], // background color for code block
+                        borderRadius: BorderRadius.circular(5), // border radius
+                        border: Border.all(color: Colors.grey), // border color
                       ),
                     ),
                   ),
@@ -50,13 +56,12 @@ class ApiIntegrationWidget extends StatelessWidget {
                   right: 0,
                   child: FloatingActionButton(
                     backgroundColor: Colors.transparent,
-                    foregroundColor: Colors.white,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
                       final text = _promptOutputController.text;
                       Clipboard.setData(ClipboardData(text: text));
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Copied to Clipboard'))
-                      );
+                          const SnackBar(content: Text('Copied to Clipboard')));
                     },
                     child: const Icon(Icons.copy_rounded),
                   ),
@@ -75,24 +80,27 @@ class ApiIntegrationWidget extends StatelessWidget {
                   child: TextField(
                     minLines: 1,
                     maxLines: 50,
-                    style: const TextStyle(color: Colors.white),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                     controller: _promptInputController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color.fromRGBO(30, 30, 30, 1),
+                      fillColor: Theme.of(context).colorScheme.background,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color.fromRGBO(30, 30, 30, 1),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color.fromRGBO(30, 30, 30, 1),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       hintText: "Input text",
                       hintStyle: TextStyle(
-                        color: Colors.white, // Set the text color to white
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary, // Set the text color to white
                       ),
                     ),
                   ),
@@ -102,8 +110,8 @@ class ApiIntegrationWidget extends StatelessWidget {
                 width: 100.0,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                   ),
                   onPressed: () {
                     generateTextWithPrompt(
@@ -171,9 +179,13 @@ class ApiIntegrationWidget extends StatelessWidget {
       request: textRequest,
       apiKey: apiKey,
     );
-    print(response.candidates.map((candidate) => candidate.output).join('\n'));
+    // print(response.candidates.map((candidate) => candidate.output).join('\n'));
     _promptOutputController.text =
         response.candidates.map((candidate) => candidate.output).join('\n');
+    // mdText = _promptOutputController.text;
+    updateText(_promptOutputController.text);
+    print("Markdown text: ");
+    print(mdText);
 
     // Extract and return the generated text
     if (response.candidates.isNotEmpty) {
@@ -183,4 +195,7 @@ class ApiIntegrationWidget extends StatelessWidget {
 
     return '';
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

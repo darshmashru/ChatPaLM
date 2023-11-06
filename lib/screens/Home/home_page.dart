@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ChatPaLM/screens/Profile/profile.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
 import 'package:ChatPaLM/screens/Authentication/LoginOrRegister.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,6 +24,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  void _loadUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      USER_NAME_GLOBAL = prefs.getString('userName') ?? '';
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     void signUserOut() async {
@@ -37,7 +51,7 @@ class _HomePageState extends State<HomePage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           title: Padding(
             padding: const EdgeInsets.only(top: 22.0),
@@ -46,7 +60,7 @@ class _HomePageState extends State<HomePage> {
               height: 50,
             ),
           ),
-          backgroundColor: Colors.black,
+          backgroundColor: Theme.of(context).colorScheme.background,
           actions: [
             IconButton(
               onPressed: () {
@@ -57,11 +71,11 @@ class _HomePageState extends State<HomePage> {
                       builder: (context) => const LoginOrRegisterPage()),
                 );
               },
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 200.0, top: 10.0),
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 200.0, top: 10.0),
                 child: Icon(
                   Icons.logout,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.primary,
                   size: 36,
                 ),
               ),
@@ -81,8 +95,8 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.black,
-          fixedColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          fixedColor: Theme.of(context).colorScheme.primary,
           unselectedItemColor: const Color.fromRGBO(149, 149, 149, 1),
           onTap: (index) {
             setState(() {
@@ -117,26 +131,27 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
           child: Text(
-            "Hello $USER_NAME!",
-            style: const TextStyle(
+            "Hello $USER_NAME_GLOBAL!",
+            style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white),
+                color: Theme.of(context).colorScheme.primary),
             textAlign: TextAlign.left,
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.all(16.0),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Text(
             "Explore and work with the PaLM API!", // Add your subheading text here
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
+            style: TextStyle(
+                fontSize: 18.0, color: Theme.of(context).colorScheme.primary),
             textAlign: TextAlign.left,
           ),
         ),
-        const Divider(
-          color: Colors.white,
+        Divider(
+          color: Theme.of(context).colorScheme.primary,
         ),
-        Expanded(
+        const Expanded(
           child: ApiIntegrationWidget(),
         ),
       ],
