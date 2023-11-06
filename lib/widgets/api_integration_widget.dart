@@ -27,7 +27,7 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -35,38 +35,16 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
             child: Stack(
               children: [
                 SingleChildScrollView(
-                  // child: TextField(
-                  //   style: const TextStyle(color: Colors.white),
-                  //   maxLines: null,
-                  //   enabled: false,
-                  //   controller: _promptOutputController,
-                  //   decoration: const InputDecoration(
-                  //     filled: true,
-                  //     fillColor: Colors.black,
-                  //     enabledBorder: OutlineInputBorder(
-                  //       borderSide: BorderSide(
-                  //         color: Colors.black,
-                  //       ),
-                  //     ),
-                  //     focusedBorder: OutlineInputBorder(
-                  //       borderSide: BorderSide(
-                  //         color: Colors.black,
-                  //       ),
-                  //     ),
-                  //     hintText: "Output text",
-                  //     hintStyle: TextStyle(
-                  //       color: Colors.white,
-                  //     ),
-                  //   ),
-                  // ),
                   child: MarkdownBody(
                     data: mdText,
                     styleSheet: MarkdownStyleSheet(
                       h1: const TextStyle(color: Colors.red, fontSize: 24),
                       h2: const TextStyle(color: Colors.orange, fontSize: 20),
-                      p: const TextStyle(color: Colors.white),
+                      p: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
                       codeblockDecoration: BoxDecoration(
-                        color: Colors.grey[200], // background color for code block
+                        color:
+                            Colors.grey[200], // background color for code block
                         borderRadius: BorderRadius.circular(5), // border radius
                         border: Border.all(color: Colors.grey), // border color
                       ),
@@ -78,7 +56,7 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
                   right: 0,
                   child: FloatingActionButton(
                     backgroundColor: Colors.transparent,
-                    foregroundColor: Colors.white,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
                       final text = _promptOutputController.text;
                       Clipboard.setData(ClipboardData(text: text));
@@ -102,24 +80,27 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
                   child: TextField(
                     minLines: 1,
                     maxLines: 50,
-                    style: const TextStyle(color: Colors.white),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                     controller: _promptInputController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color.fromRGBO(30, 30, 30, 1),
+                      fillColor: Theme.of(context).colorScheme.background,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color.fromRGBO(30, 30, 30, 1),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color.fromRGBO(30, 30, 30, 1),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       hintText: "Input text",
                       hintStyle: TextStyle(
-                        color: Colors.white, // Set the text color to white
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary, // Set the text color to white
                       ),
                     ),
                   ),
@@ -129,8 +110,8 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
                 width: 100.0,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                   ),
                   onPressed: () {
                     generateTextWithPrompt(

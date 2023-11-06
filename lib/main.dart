@@ -1,4 +1,5 @@
 import 'package:ChatPaLM/Routes/app_route_config.dart';
+import 'package:ChatPaLM/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -22,6 +23,8 @@ class Myapp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routeInformationParser: MyAppRouter().router.routeInformationParser,
       routerDelegate: MyAppRouter().router.routerDelegate,
+      theme: lightMode,
+      darkTheme: darkMode,
     );
   }
 }

@@ -63,19 +63,19 @@ class _ProfileState extends State<Profile> {
         ),
       ),
       home: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 20,
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 10),
               child: Text(
                 "Profile",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 30,
                     fontWeight: FontWeight.bold),
               ),
@@ -83,8 +83,8 @@ class _ProfileState extends State<Profile> {
             const SizedBox(
               height: 20,
             ),
-            const Divider(
-              color: Colors.white,
+            Divider(
+              color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(
               height: 30,
@@ -97,24 +97,26 @@ class _ProfileState extends State<Profile> {
                   Text(
                     "Name",
                     style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                   SizedBox(
                     width: 175,
                     child: TextField(
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
                       controller: _nameTextController,
                       // obscureText: _obscureText,
-                      decoration: const InputDecoration(
-                        fillColor: Color.fromRGBO(30, 30, 30, 1),
+                      decoration: InputDecoration(
+                        fillColor: Theme.of(context).colorScheme.background,
                         hintText: 'Enter Name',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color.fromRGBO(30, 30, 30,
-                                1), // Change the highlight color to teal
+                            color: Theme.of(context).colorScheme.background,
                             width: 2.0, // Adjust the border width as needed
                           ),
                         ),
@@ -136,14 +138,18 @@ class _ProfileState extends State<Profile> {
                   Text(
                     "Email",
                     style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                   Text(
                     FirebaseAuth.instance.currentUser!.email!.toString() ??
                         'N/A',
-                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   )
                 ],
               ),
@@ -158,26 +164,31 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Text("API Key",
                       style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      )),
                   const SizedBox(
                     height: 30,
                   ),
                   SizedBox(
                     width: 175,
                     child: TextField(
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       controller: _apiTextController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
-                        fillColor: const Color.fromRGBO(30, 30, 30, 1),
+                        fillColor: Theme.of(context).colorScheme.background,
                         hintText: 'Enter API Key',
-                        hintStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: const OutlineInputBorder(
+                        hintStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color.fromRGBO(30, 30, 30,
-                                1), // Change the highlight color to teal
+                            color: Theme.of(context)
+                                .colorScheme
+                                .background, // Change the highlight color to teal
                             width: 2.0, // Adjust the border width as needed
                           ),
                         ),
@@ -206,11 +217,11 @@ class _ProfileState extends State<Profile> {
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(30, 30, 30, 1),
+                  Theme.of(context).colorScheme.secondary,
                 ),
                 textStyle: MaterialStateProperty.all(
-                  const TextStyle(
-                    color: Colors.white,
+                  TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
                     fontSize: 20,
                   ),
                 ),
@@ -228,11 +239,11 @@ class _ProfileState extends State<Profile> {
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(30, 30, 30, 1),
+                  Theme.of(context).colorScheme.secondary,
                 ),
                 textStyle: MaterialStateProperty.all(
-                  const TextStyle(
-                    color: Colors.white,
+                  TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 20,
                   ),
                 ),
