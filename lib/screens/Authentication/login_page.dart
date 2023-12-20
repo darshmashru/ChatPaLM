@@ -1,6 +1,7 @@
 import "package:ChatPaLM/Components/button.dart";
 import "package:ChatPaLM/Components/squaretile.dart";
 import "package:ChatPaLM/Components/textfield.dart";
+import "package:ChatPaLM/screens/Forgot_Password/forgot_password.dart";
 import "package:ChatPaLM/screens/Home/home_page.dart";
 import "package:ChatPaLM/services/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -105,15 +106,24 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: Colors.white),
-                      )
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPasswordScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
+                          ))
                     ],
                   ),
                 ),
