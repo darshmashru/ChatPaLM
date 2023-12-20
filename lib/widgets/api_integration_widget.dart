@@ -72,16 +72,17 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              Container(
                 width: 290.0,
+                padding: const EdgeInsets.only(right: 10.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 25.0, vertical: 25.0),
+                  padding: const EdgeInsets.symmetric(vertical: 25.0),
                   child: TextField(
                     minLines: 1,
                     maxLines: 50,
-                    style:
-                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                     controller: _promptInputController,
                     decoration: InputDecoration(
                       filled: true,
@@ -90,28 +91,30 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
                         borderSide: BorderSide(
                           color: Theme.of(context).colorScheme.primary,
                         ),
+                        borderRadius: BorderRadius.circular(
+                            10.0), // Set the border radius
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Theme.of(context).colorScheme.primary,
                         ),
+                        borderRadius: BorderRadius.circular(
+                            10.0), // Set the border radius
                       ),
                       hintText: "Input text",
                       hintStyle: TextStyle(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary, // Set the text color to white
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                width: 100.0,
+                width: 75.0,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Theme.of(context).colorScheme.primary,
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    foregroundColor: Theme.of(context).colorScheme.background,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   onPressed: () {
                     generateTextWithPrompt(

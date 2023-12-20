@@ -53,13 +53,6 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(top: 22.0),
-            child: Image.asset(
-              "lib/assets/logos/image 7.png",
-              height: 50,
-            ),
-          ),
           backgroundColor: Theme.of(context).colorScheme.background,
           actions: [
             IconButton(
@@ -68,19 +61,33 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const LoginOrRegisterPage()),
+                    builder: (context) => const LoginOrRegisterPage(),
+                  ),
                 );
               },
               icon: Padding(
-                padding: const EdgeInsets.only(right: 200.0, top: 10.0),
+                padding: const EdgeInsets.only(right: 5.0, top: 15.0),
                 child: Icon(
                   Icons.logout,
                   color: Theme.of(context).colorScheme.primary,
-                  size: 36,
+                  size: 30,
                 ),
               ),
             )
           ],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 22.0, left: 50.0),
+                child: Image.asset(
+                  "lib/assets/logos/image 7.png",
+                  height: 50,
+                  alignment: Alignment.center,
+                ),
+              ),
+            ],
+          ),
         ),
         body: PageView(
           controller: _pageController,
