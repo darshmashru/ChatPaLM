@@ -1,6 +1,7 @@
 import "package:ChatPaLM/Components/button.dart";
 import "package:ChatPaLM/Components/squaretile.dart";
 import "package:ChatPaLM/Components/textfield.dart";
+import "package:ChatPaLM/screens/Forgot_Password/forgot_password.dart";
 import "package:ChatPaLM/screens/Home/home_page.dart";
 import "package:ChatPaLM/services/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -24,11 +25,11 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: const Color.fromRGBO(30, 30, 30, 1),
+            backgroundColor: Theme.of(context).colorScheme.background,
             title: Center(
               child: Text(
                 message,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ),
           );
@@ -60,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: Center(
           child: SingleChildScrollView(
@@ -72,16 +73,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Image.asset(
                   'lib/assets/logos/PaLM Logo.png',
-                  width: 100,
-                  height: 100,
+                  width: 75,
+                  height: 75,
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
-                const Text(
+                Text(
                   "Welcome to ChatPaLM!🎉🎉",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -105,15 +106,24 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: Colors.white),
-                      )
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPasswordScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
+                          ))
                     ],
                   ),
                 ),
@@ -131,10 +141,11 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.grey[400],
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text('or Continue With',
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary)),
                     ),
                     Expanded(
                       child: Divider(
@@ -160,14 +171,14 @@ class _LoginPageState extends State<LoginPage> {
                     // )
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "Not a member ?",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

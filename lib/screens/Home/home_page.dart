@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:ChatPaLM/globals.dart';
+import 'package:ChatPaLM/screens/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ChatPaLM/screens/Profile/profile.dart';
@@ -22,18 +25,19 @@ class _HomePageState extends State<HomePage> {
     _pageController.dispose();
     super.dispose();
   }
+
   @override
   void initState() {
-  super.initState();
-  _loadUserName();
-}
+    super.initState();
+    _loadUserName();
+  }
 
-void _loadUserName() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  setState(() {
-    USER_NAME_GLOBAL = prefs.getString('userName') ?? '';
-  });
-}
+  void _loadUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      USER_NAME_GLOBAL = prefs.getString('userName') ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +54,10 @@ void _loadUserName() async {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(top: 22.0),
-            child: Image.asset(
-              "lib/assets/logos/image 7.png",
-              height: 50,
-            ),
-          ),
-          backgroundColor: Colors.black,
+          automaticallyImplyLeading: false,
+          backgroundColor: Theme.of(context).colorScheme.background,
           actions: [
             IconButton(
               onPressed: () {
@@ -67,25 +65,40 @@ void _loadUserName() async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const LoginOrRegisterPage()),
+                    builder: (context) => const LoginOrRegisterPage(),
+                  ),
                 );
               },
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 200.0, top: 10.0),
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 5.0, top: 15.0),
                 child: Icon(
                   Icons.logout,
-                  color: Colors.white,
-                  size: 36,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 30,
                 ),
               ),
             )
           ],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 22.0, left: 50.0),
+                child: Image.asset(
+                  "lib/assets/logos/image 7.png",
+                  height: 50,
+                  alignment: Alignment.center,
+                ),
+              ),
+            ],
+          ),
         ),
         body: PageView(
           controller: _pageController,
           children: [
             buildHomePage(userEmailString),
             const Profile(),
+            const SettingsPage()
           ],
           onPageChanged: (index) {
             setState(() {
@@ -94,8 +107,8 @@ void _loadUserName() async {
           },
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.black,
-          fixedColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          fixedColor: Theme.of(context).colorScheme.primary,
           unselectedItemColor: const Color.fromRGBO(149, 149, 149, 1),
           onTap: (index) {
             setState(() {
@@ -106,7 +119,7 @@ void _loadUserName() async {
             });
           },
           currentIndex: myIndex,
-          items: const [
+          items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Home",
@@ -117,6 +130,13 @@ void _loadUserName() async {
               label: "Profile",
               backgroundColor: Colors.black,
             ),
+            if (Platform
+                .isAndroid) // Conditionally include the item only on Android
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: "Settings",
+                backgroundColor: Colors.black,
+              ),
           ],
         ),
       ),
@@ -131,23 +151,24 @@ void _loadUserName() async {
           padding: const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
           child: Text(
             "Hello $USER_NAME_GLOBAL!",
-            style: const TextStyle(
+            style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white),
+                color: Theme.of(context).colorScheme.primary),
             textAlign: TextAlign.left,
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.all(16.0),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Text(
             "Explore and work with the PaLM API!", // Add your subheading text here
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
+            style: TextStyle(
+                fontSize: 18.0, color: Theme.of(context).colorScheme.primary),
             textAlign: TextAlign.left,
           ),
         ),
-        const Divider(
-          color: Colors.white,
+        Divider(
+          color: Theme.of(context).colorScheme.primary,
         ),
         const Expanded(
           child: ApiIntegrationWidget(),

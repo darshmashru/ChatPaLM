@@ -63,193 +63,220 @@ class _ProfileState extends State<Profile> {
         ),
       ),
       home: Scaffold(
-        backgroundColor: Colors.black,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(
-                "Profile",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Divider(
-              color: Colors.white,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Name",
-                    style: GoogleFonts.inter(
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "Profile",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Divider(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Name",
+                      style: GoogleFonts.inter(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 175,
-                    child: TextField(
-                      style: const TextStyle(color: Colors.white),
-                      controller: _nameTextController,
-                      // obscureText: _obscureText,
-                      decoration: const InputDecoration(
-                        fillColor: Color.fromRGBO(30, 30, 30, 1),
-                        hintText: 'Enter Name',
-                        hintStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(30, 30, 30,
-                                1), // Change the highlight color to teal
-                            width: 2.0, // Adjust the border width as needed
-                          ),
-                        ),
-                        filled: true,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      width: 175,
+                      child: TextField(
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        controller: _nameTextController,
+                        // obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          fillColor: Theme.of(context).colorScheme.background,
+                          hintText: 'Enter Name',
+                          hintStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.background,
+                              width: 2.0, // Adjust the border width as needed
+                            ),
+                          ),
+                          filled: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Email",
-                    style: GoogleFonts.inter(
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Email",
+                      style: GoogleFonts.inter(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  Text(
-                    FirebaseAuth.instance.currentUser!.email!.toString() ??
-                        'N/A',
-                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("API Key",
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    Text(
+                      FirebaseAuth.instance.currentUser!.email!.toString() ??
+                          'N/A',
                       style: GoogleFonts.inter(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("API Key",
+                        style: GoogleFonts.inter(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  SizedBox(
-                    width: 175,
-                    child: TextField(
-                      style: const TextStyle(color: Colors.white),
-                      controller: _apiTextController,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        fillColor: const Color.fromRGBO(30, 30, 30, 1),
-                        hintText: 'Enter API Key',
-                        hintStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(30, 30, 30,
-                                1), // Change the highlight color to teal
-                            width: 2.0, // Adjust the border width as needed
-                          ),
+                          color: Theme.of(context).colorScheme.primary,
+                        )),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    SizedBox(
+                      width: 175,
+                      child: TextField(
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
                         ),
-                        filled: true,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _apiTextController.text.isNotEmpty
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                        controller: _apiTextController,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          fillColor: Theme.of(context).colorScheme.background,
+                          hintText: 'Enter API Key',
+                          hintStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .background, // Change the highlight color to teal
+                              width: 2.0, // Adjust the border width as needed
+                            ),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                            print(_obscureTextNotifier.value);
-                            print(_apiTextController.text);
-                          },
+                          filled: true,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _apiTextController.text.isNotEmpty
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                              print(_obscureTextNotifier.value);
+                              print(_apiTextController.text);
+                            },
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 50),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(30, 30, 30, 1),
-                ),
-                textStyle: MaterialStateProperty.all(
-                  const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
+                  ],
                 ),
               ),
-              child: const Text("Update Name"),
-              onPressed: () {
-                print("Old Name:$USER_NAME_GLOBAL");
-                setState(() {
-                  USER_NAME_GLOBAL = _nameTextController.text;
-                  _saveName();
-                });
-                print("New Name:$USER_NAME_GLOBAL");
-              },
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(30, 30, 30, 1),
-                ),
-                textStyle: MaterialStateProperty.all(
-                  const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
+              const SizedBox(height: 50),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.tertiary,
+                    ),
+                    textStyle: MaterialStateProperty.all(
+                      TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary,
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              child: const Text("Update API Key"),
-              onPressed: () {
-                print("Old API Key:$PALM_API_KEY");
-                setState(
-                  () {
-                    apiKey = _apiTextController.text;
-                    PALM_API_KEY = apiKey;
-                    print("New API Key:$apiKey");
+                  child: Text(
+                    "Update Name",
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  ),
+                  onPressed: () {
+                    print("Old Name:$USER_NAME_GLOBAL");
+                    setState(() {
+                      USER_NAME_GLOBAL = _nameTextController.text;
+                      _saveName();
+                    });
+                    print("New Name:$USER_NAME_GLOBAL");
                   },
-                );
-              },
-            ),
-          ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.tertiary,
+                    ),
+                    textStyle: MaterialStateProperty.all(
+                      TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    "Update API Key",
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  ),
+                  onPressed: () {
+                    print("Old API Key:$PALM_API_KEY");
+                    setState(
+                      () {
+                        apiKey = _apiTextController.text;
+                        PALM_API_KEY = apiKey;
+                        print("New API Key:$apiKey");
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
