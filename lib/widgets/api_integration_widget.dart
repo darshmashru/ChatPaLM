@@ -43,10 +43,10 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
                       p: TextStyle(
                           color: Theme.of(context).colorScheme.primary),
                       codeblockDecoration: BoxDecoration(
-                        color:
-                            Colors.grey[200], // background color for code block
+                        color: Colors.black, // background color for code block
                         borderRadius: BorderRadius.circular(5), // border radius
-                        border: Border.all(color: Colors.grey), // border color
+                        border: Border.all(color: Colors.black),
+                        // border color
                       ),
                     ),
                   ),
