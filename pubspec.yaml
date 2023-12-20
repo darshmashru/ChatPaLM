@@ -47,6 +47,7 @@ dependencies:
   flutter_markdown: ^0.6.18
   shared_preferences: ^2.2.2
   url_launcher: ^6.2.2
+  dash_bubble: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

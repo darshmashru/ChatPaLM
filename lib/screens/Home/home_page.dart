@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:ChatPaLM/globals.dart';
+import 'package:ChatPaLM/screens/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ChatPaLM/screens/Profile/profile.dart';
@@ -95,6 +98,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             buildHomePage(userEmailString),
             const Profile(),
+            const SettingsPage()
           ],
           onPageChanged: (index) {
             setState(() {
@@ -115,7 +119,7 @@ class _HomePageState extends State<HomePage> {
             });
           },
           currentIndex: myIndex,
-          items: const [
+          items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Home",
@@ -126,6 +130,13 @@ class _HomePageState extends State<HomePage> {
               label: "Profile",
               backgroundColor: Colors.black,
             ),
+            if (Platform
+                .isAndroid) // Conditionally include the item only on Android
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: "Settings",
+                backgroundColor: Colors.black,
+              ),
           ],
         ),
       ),
