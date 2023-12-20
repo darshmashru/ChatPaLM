@@ -57,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: Center(
           child: SingleChildScrollView(
@@ -69,16 +69,16 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 Image.asset(
                   'lib/assets/logos/PaLM Logo.png',
-                  width: 100,
-                  height: 100,
+                  width: 75,
+                  height: 75,
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                const Text(
+                Text(
                   "Let's create an account for you!",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 16,
                   ),
                 ),
@@ -116,26 +116,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 50),
                 Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Divider(
                         thickness: 0.6,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text('or Continue With',
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary)),
                     ),
                     Expanded(
                       child: Divider(
                         thickness: 0.6,
-                        color: Colors.grey[400],
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     )
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -147,14 +148,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     //     imagePath: "lib/assets/images/Apple_logo_white.png", onTap: () {})
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "Already a member?",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     const SizedBox(width: 4),

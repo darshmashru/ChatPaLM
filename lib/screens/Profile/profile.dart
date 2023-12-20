@@ -214,51 +214,65 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             const SizedBox(height: 50),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  Theme.of(context).colorScheme.secondary,
-                ),
-                textStyle: MaterialStateProperty.all(
-                  TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
-                    fontSize: 20,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Theme.of(context).colorScheme.tertiary,
+                  ),
+                  textStyle: MaterialStateProperty.all(
+                    TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
+                child: Text(
+                  "Update Name",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
+                onPressed: () {
+                  print("Old Name:$USER_NAME_GLOBAL");
+                  setState(() {
+                    USER_NAME_GLOBAL = _nameTextController.text;
+                    _saveName();
+                  });
+                  print("New Name:$USER_NAME_GLOBAL");
+                },
               ),
-              child: const Text("Update Name"),
-              onPressed: () {
-                print("Old Name:$USER_NAME_GLOBAL");
-                setState(() {
-                  USER_NAME_GLOBAL = _nameTextController.text;
-                  _saveName();
-                });
-                print("New Name:$USER_NAME_GLOBAL");
-              },
             ),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  Theme.of(context).colorScheme.secondary,
-                ),
-                textStyle: MaterialStateProperty.all(
-                  TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontSize: 20,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Theme.of(context).colorScheme.tertiary,
+                  ),
+                  textStyle: MaterialStateProperty.all(
+                    TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
+                child: Text(
+                  "Update API Key",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
+                onPressed: () {
+                  print("Old API Key:$PALM_API_KEY");
+                  setState(
+                    () {
+                      apiKey = _apiTextController.text;
+                      PALM_API_KEY = apiKey;
+                      print("New API Key:$apiKey");
+                    },
+                  );
+                },
               ),
-              child: const Text("Update API Key"),
-              onPressed: () {
-                print("Old API Key:$PALM_API_KEY");
-                setState(
-                  () {
-                    apiKey = _apiTextController.text;
-                    PALM_API_KEY = apiKey;
-                    print("New API Key:$apiKey");
-                  },
-                );
-              },
             ),
           ],
         ),

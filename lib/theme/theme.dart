@@ -7,7 +7,7 @@ ThemeData lightMode = ThemeData(
       background: Colors.white,
       primary: Colors.black,
       secondary: Color.fromRGBO(30, 30, 30, 1),
-      tertiary: Colors.grey,
+      tertiary: Color.fromARGB(31, 162, 162, 162),
     ));
 
 ThemeData darkMode = ThemeData(
@@ -15,4 +15,4 @@ ThemeData darkMode = ThemeData(
     colorScheme: const ColorScheme.dark(
         background: Colors.black,
         primary: Colors.white,
-        secondary: Colors.grey));
+        secondary: Color.fromRGBO(29, 29, 29, 1)));

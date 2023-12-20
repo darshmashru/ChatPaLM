@@ -18,8 +18,8 @@ class MyButton extends StatelessWidget {
         child: Center(
             child: Text(
           text,
-          style: const TextStyle(
-              color: Color(0xFFFFFFFF),
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
               fontSize: 16,
               fontWeight: FontWeight.bold),
         )),
