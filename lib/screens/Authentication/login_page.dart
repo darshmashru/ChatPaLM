@@ -72,11 +72,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Image.asset(
                   'lib/assets/logos/PaLM Logo.png',
-                  width: 100,
-                  height: 100,
+                  width: 75,
+                  height: 75,
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
                 Text(
                   "Welcome to ChatPaLM!🎉🎉",
@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                     // )
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
