@@ -30,27 +30,12 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: () => _requestPostNotificationsPermission(context),
-                child: const Text('Request Post Notifications Permission'),
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () => _hasPostNotificationsPermission(context),
-                child: const Text('Has Post Notifications Permission?'),
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () => _isRunning(context),
-                child: const Text('Is Running?'),
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
                 onPressed: () {
                   _startBubble(
                     context,
                     bubbleOptions: BubbleOptions(
                       // notificationIcon: 'github_bubble',
-                      bubbleIcon: 'github_bubble',
+                      bubbleIcon: 'palm',
                       // closeIcon: 'github_bubble',
                       startLocationX: 0,
                       startLocationY: 100,
@@ -62,32 +47,6 @@ class SettingsPage extends StatelessWidget {
                       enableAnimateToEdge: true,
                       enableBottomShadow: true,
                       keepAliveWhenAppExit: false,
-                    ),
-                    notificationOptions: NotificationOptions(
-                      id: 1,
-                      title: 'Dash Bubble Playground',
-                      body: 'Dash Bubble service is running',
-                      channelId: 'dash_bubble_notification',
-                      channelName: 'Dash Bubble Notification',
-                    ),
-                    onTap: () => _logMessage(
-                      context: context,
-                      message: 'Bubble Tapped',
-                    ),
-                    onTapDown: (x, y) => _logMessage(
-                      context: context,
-                      message:
-                          'Bubble Tapped Down on: ${_getRoundedCoordinatesAsString(x, y)}',
-                    ),
-                    onTapUp: (x, y) => _logMessage(
-                      context: context,
-                      message:
-                          'Bubble Tapped Up on: ${_getRoundedCoordinatesAsString(x, y)}',
-                    ),
-                    onMove: (x, y) => _logMessage(
-                      context: context,
-                      message:
-                          'Bubble Moved to: ${_getRoundedCoordinatesAsString(x, y)}',
                     ),
                   );
                 },
@@ -217,9 +176,6 @@ class SettingsPage extends StatelessWidget {
     BubbleOptions? bubbleOptions,
     NotificationOptions? notificationOptions,
     VoidCallback? onTap,
-    Function(double x, double y)? onTapDown,
-    Function(double x, double y)? onTapUp,
-    Function(double x, double y)? onMove,
   }) async {
     await _runMethod(
       context,
@@ -228,9 +184,6 @@ class SettingsPage extends StatelessWidget {
           bubbleOptions: bubbleOptions,
           notificationOptions: notificationOptions,
           onTap: onTap,
-          onTapDown: onTapDown,
-          onTapUp: onTapUp,
-          onMove: onMove,
         );
 
         SnackBars.show(
