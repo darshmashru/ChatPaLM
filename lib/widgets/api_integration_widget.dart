@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ApiIntegrationWidget extends StatefulWidget {
   const ApiIntegrationWidget({Key? key}) : super(key: key);
@@ -34,19 +35,34 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
           Expanded(
             child: Stack(
               children: [
-                SingleChildScrollView(
-                  child: MarkdownBody(
-                    data: mdText,
-                    styleSheet: MarkdownStyleSheet(
-                      h1: const TextStyle(color: Colors.red, fontSize: 24),
-                      h2: const TextStyle(color: Colors.orange, fontSize: 20),
-                      p: TextStyle(
-                          color: Theme.of(context).colorScheme.primary),
-                      codeblockDecoration: BoxDecoration(
-                        color: Colors.black, // background color for code block
-                        borderRadius: BorderRadius.circular(5), // border radius
-                        border: Border.all(color: Colors.black),
-                        // border color
+                SizedBox(
+                  height: MediaQuery.of(context)
+                      .size
+                      .height, // Height of the screen
+                  width:
+                      MediaQuery.of(context).size.width, // Width of the screen
+                  child: SingleChildScrollView(
+                    child: MarkdownBody(
+                      data: mdText,
+                      selectable: true,
+                      onTapLink: (text, href, title) {
+                        if (href != null) {
+                          launchUrl(Uri.parse(href));
+                        }
+                      },
+                      styleSheet: MarkdownStyleSheet(
+                        h1: const TextStyle(color: Colors.red, fontSize: 24),
+                        h2: const TextStyle(color: Colors.orange, fontSize: 20),
+                        p: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        codeblockDecoration: BoxDecoration(
+                          color:
+                              Colors.black, // background color for code block
+                          borderRadius:
+                              BorderRadius.circular(5), // border radius
+                          border: Border.all(color: Colors.black),
+                          // border color
+                        ),
                       ),
                     ),
                   ),
