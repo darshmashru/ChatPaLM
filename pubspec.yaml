@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.2.2
   url_launcher: ^6.2.2
   dash_bubble: ^2.0.0
+  flutter_riverpod: ^0.14.0+3
 dev_dependencies:
   flutter_test:
     sdk: flutter

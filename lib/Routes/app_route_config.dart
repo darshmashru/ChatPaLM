@@ -2,6 +2,7 @@ import 'package:ChatPaLM/Routes/app_route_constants.dart';
 import 'package:ChatPaLM/screens/Authentication/auth_page.dart';
 import 'package:ChatPaLM/screens/Home/home_page.dart';
 import 'package:ChatPaLM/screens/Profile/profile.dart';
+import 'package:ChatPaLM/screens/Safety/safety.dart';
 import 'package:go_router/go_router.dart';
 
 class MyAppRouter {
@@ -25,6 +26,13 @@ class MyAppRouter {
       path: '/profile',
       builder: (context, state) {
         return const Profile();
+      },
+    ),
+    GoRoute(
+      name: MyAppRoutConstants.safetyRoute,
+      path: '/Safety',
+      builder: (context, state) {
+        return const Safety();
       },
     ),
   ]);

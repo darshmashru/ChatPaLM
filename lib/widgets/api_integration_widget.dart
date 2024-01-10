@@ -1,6 +1,8 @@
 import 'package:ChatPaLM/env/env.dart';
+import 'package:ChatPaLM/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -160,6 +162,7 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
     GenerateTextRequest textRequest = GenerateTextRequest(
         prompt: TextPrompt(text: promptString),
         temperature: 0.7,
+        // temperature: temperature,
         // Control the randomness of text generation
         candidateCount: 1,
         // Number of generated text candidates
@@ -205,6 +208,8 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
     updateText(_promptOutputController.text);
     print("Markdown text: ");
     print(mdText);
+    print("Temperature : ");
+    // print(global_temperature);
 
     // Extract and return the generated text
     if (response.candidates.isNotEmpty) {
