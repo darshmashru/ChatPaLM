@@ -6,15 +6,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:ChatPaLM/providers/parameter_provider.dart';
 
-class ApiIntegrationWidget extends StatefulWidget {
+class ApiIntegrationWidget extends ConsumerStatefulWidget {
   const ApiIntegrationWidget({Key? key}) : super(key: key);
 
   @override
   _ApiIntegrationWidgetState createState() => _ApiIntegrationWidgetState();
 }
 
-class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
+class _ApiIntegrationWidgetState extends ConsumerState<ApiIntegrationWidget>
     with AutomaticKeepAliveClientMixin {
   final TextEditingController _promptInputController = TextEditingController();
   final TextEditingController _promptOutputController = TextEditingController();
@@ -38,11 +39,8 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
             child: Stack(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context)
-                      .size
-                      .height, // Height of the screen
-                  width:
-                      MediaQuery.of(context).size.width, // Width of the screen
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
                   child: SingleChildScrollView(
                     child: MarkdownBody(
                       data: mdText,
@@ -58,12 +56,9 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
                         p: TextStyle(
                             color: Theme.of(context).colorScheme.primary),
                         codeblockDecoration: BoxDecoration(
-                          color:
-                              Colors.black, // background color for code block
-                          borderRadius:
-                              BorderRadius.circular(5), // border radius
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: Colors.black),
-                          // border color
                         ),
                       ),
                     ),
@@ -84,7 +79,7 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
                     child: const Icon(Icons.copy_rounded),
                   ),
                 ),
-              ], // children:
+              ],
             ),
           ),
           Row(
@@ -98,31 +93,25 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
                   child: TextField(
                     minLines: 1,
                     maxLines: 50,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                     controller: _promptInputController,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Theme.of(context).colorScheme.background,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                            10.0), // Set the border radius
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                            10.0), // Set the border radius
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       hintText: "Input text",
                       hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
@@ -151,67 +140,57 @@ class _ApiIntegrationWidgetState extends State<ApiIntegrationWidget>
   Future<String> generateTextWithPrompt({
     required String promptString,
   }) async {
-    // API Key from Envied .env file
-    String apiKey = Env.palmApiKey;
+    double temperature = ref.read(temperatureProvider);
+    double topK = ref.read(topKProvider);
+    double topP = ref.read(topPProvider);
 
-    // API Key from globals.dart
-    // String apiKey = PALM_API_KEY;
+    String apiKey = Env.palmApiKey;
 
     String textModel = 'models/text-bison-001';
 
+    print(temperature);
+    print(topK);
+    print(topP);
+
     GenerateTextRequest textRequest = GenerateTextRequest(
-        prompt: TextPrompt(text: promptString),
-        temperature: 0.7,
-        // temperature: temperature,
-        // Control the randomness of text generation
-        candidateCount: 1,
-        // Number of generated text candidates
-        topK: 40,
-        // Consider the top K probable tokens
-        topP: 0.95,
-        // Nucleus sampling parameter
-        maxOutputTokens: 1024,
-        // Maximum number of output tokens
-        stopSequences: [],
-        // Sequences at which to stop generation
-        safetySettings: const [
-          // Define safety settings to filter out harmful content
-          SafetySetting(
-              category: HarmCategory.derogatory,
-              threshold: HarmBlockThreshold.lowAndAbove),
-          SafetySetting(
-              category: HarmCategory.toxicity,
-              threshold: HarmBlockThreshold.lowAndAbove),
-          SafetySetting(
-              category: HarmCategory.violence,
-              threshold: HarmBlockThreshold.mediumAndAbove),
-          SafetySetting(
-              category: HarmCategory.sexual,
-              threshold: HarmBlockThreshold.mediumAndAbove),
-          SafetySetting(
-              category: HarmCategory.medical,
-              threshold: HarmBlockThreshold.mediumAndAbove),
-          SafetySetting(
-              category: HarmCategory.dangerous,
-              threshold: HarmBlockThreshold.mediumAndAbove),
-        ]);
+      prompt: TextPrompt(text: promptString),
+      temperature: temperature,
+      candidateCount: 1,
+      topK: topK.round(),
+      topP: topP,
+      maxOutputTokens: 1024,
+      safetySettings: const [
+        SafetySetting(
+            category: HarmCategory.derogatory,
+            threshold: HarmBlockThreshold.lowAndAbove),
+        SafetySetting(
+            category: HarmCategory.toxicity,
+            threshold: HarmBlockThreshold.lowAndAbove),
+        SafetySetting(
+            category: HarmCategory.violence,
+            threshold: HarmBlockThreshold.mediumAndAbove),
+        SafetySetting(
+            category: HarmCategory.sexual,
+            threshold: HarmBlockThreshold.mediumAndAbove),
+        SafetySetting(
+            category: HarmCategory.medical,
+            threshold: HarmBlockThreshold.mediumAndAbove),
+        SafetySetting(
+            category: HarmCategory.dangerous,
+            threshold: HarmBlockThreshold.mediumAndAbove),
+      ],
+    );
 
     final GeneratedText response = await GenerativeLanguageAPI.generateText(
       modelName: textModel,
       request: textRequest,
       apiKey: apiKey,
     );
-    // print(response.candidates.map((candidate) => candidate.output).join('\n'));
+
     _promptOutputController.text =
         response.candidates.map((candidate) => candidate.output).join('\n');
-    // mdText = _promptOutputController.text;
     updateText(_promptOutputController.text);
-    print("Markdown text: ");
-    print(mdText);
-    print("Temperature : ");
-    // print(global_temperature);
 
-    // Extract and return the generated text
     if (response.candidates.isNotEmpty) {
       TextCompletion candidate = response.candidates.first;
       return candidate.output;
