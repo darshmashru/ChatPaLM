@@ -1,5 +1,5 @@
 name: ChatPaLM
-description: A new Flutter project.
+description: A Flutter-based cross-platform mobile application with Firebase Authentication and Text Generation by the PaLM LLM.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
