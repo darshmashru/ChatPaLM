@@ -41,6 +41,13 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
                 context.go('/profile');
               },
             ),
+            GButton(
+              icon: Icons.health_and_safety,
+              text: 'Safety',
+              onPressed: () {
+                context.go('/Safety');
+              },
+            ),
           ],
           selectedIndex: mycurrentindex,
           onTabChange: (index) {

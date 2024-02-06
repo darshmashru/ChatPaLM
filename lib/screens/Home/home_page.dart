@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ChatPaLM/globals.dart';
+import 'package:ChatPaLM/screens/Safety/safety.dart';
 import 'package:ChatPaLM/screens/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -98,7 +99,9 @@ class _HomePageState extends State<HomePage> {
           children: [
             buildHomePage(userEmailString),
             const Profile(),
-            const SettingsPage()
+            // const SettingsPage(),
+            //TODO: Update settings to also show only if platform is android.
+            const Safety()
           ],
           onPageChanged: (index) {
             setState(() {
@@ -120,23 +123,28 @@ class _HomePageState extends State<HomePage> {
           },
           currentIndex: myIndex,
           items: [
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Home",
               backgroundColor: Colors.black,
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: "Profile",
               backgroundColor: Colors.black,
             ),
             if (Platform
                 .isAndroid) // Conditionally include the item only on Android
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
                 label: "Settings",
                 backgroundColor: Colors.black,
               ),
+              const BottomNavigationBarItem(
+              icon: Icon(Icons.health_and_safety),
+              label: "Safety",
+              backgroundColor: Colors.black,
+            ),
           ],
         ),
       ),
