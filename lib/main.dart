@@ -1,7 +1,9 @@
 import 'package:ChatPaLM/Routes/app_route_config.dart';
+import 'package:ChatPaLM/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   // await dotenv.load(fileName: ".env");
@@ -10,11 +12,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const Myapp());
+  runApp(const ProviderScope(child: Myapp()));
 }
 
 class Myapp extends StatelessWidget {
-  const Myapp();
+  const Myapp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,8 @@ class Myapp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routeInformationParser: MyAppRouter().router.routeInformationParser,
       routerDelegate: MyAppRouter().router.routerDelegate,
+      theme: lightMode,
+      darkTheme: darkMode,
     );
   }
 }

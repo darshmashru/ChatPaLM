@@ -1,30 +1,30 @@
 import "package:ChatPaLM/Components/button.dart";
 import "package:ChatPaLM/Components/squaretile.dart";
 import "package:ChatPaLM/Components/textfield.dart";
-import "package:ChatPaLM/screens/home_page.dart";
 import "package:ChatPaLM/services/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function? onTap;
-  LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   void showErrorMessage(String message) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Color.fromRGBO(30, 30, 30, 1),
+            backgroundColor: Colors.deepPurple,
             title: Center(
               child: Text(
                 message,
@@ -35,24 +35,21 @@ class _LoginPageState extends State<LoginPage> {
         });
   }
 
-  void signUserIn() async {
+  void signUserUp() async {
     showDialog(
         context: context,
         builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center();
         });
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
-      Navigator.pop(context);
-
-      // Redirect to the home_page.dart file
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
+      } else {
+        Navigator.pop(context);
+        showErrorMessage("Passwords Don't Match");
+      }
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
       showErrorMessage(e.code);
     }
   }
@@ -60,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: Center(
           child: SingleChildScrollView(
@@ -72,18 +69,17 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Image.asset(
                   'lib/assets/logos/PaLM Logo.png',
-                  width: 100,
-                  height: 100,
+                  width: 75,
+                  height: 75,
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                const Text(
-                  "Welcome to ChatPaLM!🎉🎉",
+                Text(
+                  "Let's create an account for you!",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(
@@ -91,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 MyTextField(
                   controller: emailController,
-                  hintText: "Username/Email",
+                  hintText: "Username",
                   obscureText: false,
                 ),
                 const SizedBox(
@@ -105,22 +101,17 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
+                MyTextField(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm Password',
+                  obscureText: true,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(
+                  height: 10,
+                ),
                 MyButton(
-                  text: 'Sign In',
-                  onTap: signUserIn,
+                  onTap: signUserUp,
+                  text: 'Sign Up',
                 ),
                 const SizedBox(height: 50),
                 Row(
@@ -128,54 +119,50 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: Divider(
                         thickness: 0.6,
-                        color: Colors.grey[400],
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text('or Continue With',
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary)),
                     ),
                     Expanded(
                       child: Divider(
                         thickness: 0.6,
-                        color: Colors.grey[400],
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     )
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Squaretile(
-                      imagePath: "lib/assets/images/google.png",
-                      onTap: () => AuthService().signInWithGoogle(),
-                    ),
-                    const SizedBox(width: 10),
-                    Squaretile(
-                      // imagePath: "lib/assets/images/apple.png",
-                      imagePath: "lib/assets/images/Apple_logo_white.png",
-                      onTap: () {},
-                    )
+                        imagePath: "lib/assets/images/google.png",
+                        onTap: () => AuthService().signInWithGoogle()),
+                    // const SizedBox(width: 10),
+                    // Squaretile(
+                    //     imagePath: "lib/assets/images/Apple_logo_white.png", onTap: () {})
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Not a member ?",
+                    Text(
+                      "Already a member?",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap as void Function()?,
                       child: const Text(
-                        "Register Now",
+                        "Login",
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,

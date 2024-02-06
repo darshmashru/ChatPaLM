@@ -47,3 +47,4 @@ app.*.map.json
 /api-keys.json
 /lib/env/env.dart
 /lib/env/env.g.dart
+.vscode/settings.json

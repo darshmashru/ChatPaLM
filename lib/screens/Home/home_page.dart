@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:ChatPaLM/globals.dart';
+import 'package:ChatPaLM/screens/Safety/safety.dart';
+import 'package:ChatPaLM/screens/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ChatPaLM/screens/profile.dart';
+import 'package:ChatPaLM/screens/Profile/profile.dart';
 import 'package:ChatPaLM/widgets/api_integration_widget.dart';
-import 'package:ChatPaLM/screens/LoginOrRegister.dart';
-import 'package:ChatPaLM/widgets/BottomNavigationBarWidget.dart';
+import 'package:ChatPaLM/screens/Authentication/LoginOrRegister.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,6 +28,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  void _loadUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      USER_NAME_GLOBAL = prefs.getString('userName') ?? '';
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     void signUserOut() async {
@@ -37,16 +55,10 @@ class _HomePageState extends State<HomePage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(top: 22.0),
-            child: Image.asset(
-              "lib/assets/logos/image 7.png",
-              height: 50,
-            ),
-          ),
-          backgroundColor: Colors.black,
+          automaticallyImplyLeading: false,
+          backgroundColor: Theme.of(context).colorScheme.background,
           actions: [
             IconButton(
               onPressed: () {
@@ -54,25 +66,42 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const LoginOrRegisterPage()),
+                    builder: (context) => const LoginOrRegisterPage(),
+                  ),
                 );
               },
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 200.0, top: 10.0),
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 5.0, top: 15.0),
                 child: Icon(
                   Icons.logout,
-                  color: Colors.white,
-                  size: 36,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 30,
                 ),
               ),
             )
           ],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 22.0, left: 50.0),
+                child: Image.asset(
+                  "lib/assets/logos/image 7.png",
+                  height: 50,
+                  alignment: Alignment.center,
+                ),
+              ),
+            ],
+          ),
         ),
         body: PageView(
           controller: _pageController,
           children: [
             buildHomePage(userEmailString),
             const Profile(),
+            // const SettingsPage(),
+            //TODO: Update settings to also show only if platform is android.
+            const Safety()
           ],
           onPageChanged: (index) {
             setState(() {
@@ -81,9 +110,9 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.black,
-          fixedColor: Colors.white,
-          unselectedItemColor: Color.fromRGBO(149, 149, 149, 1),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          fixedColor: Theme.of(context).colorScheme.primary,
+          unselectedItemColor: const Color.fromRGBO(149, 149, 149, 1),
           onTap: (index) {
             setState(() {
               myIndex = index;
@@ -93,15 +122,27 @@ class _HomePageState extends State<HomePage> {
             });
           },
           currentIndex: myIndex,
-          items: const [
-            BottomNavigationBarItem(
+          items: [
+            const BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Home",
               backgroundColor: Colors.black,
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: "Profile",
+              backgroundColor: Colors.black,
+            ),
+            if (Platform
+                .isAndroid) // Conditionally include the item only on Android
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: "Settings",
+                backgroundColor: Colors.black,
+              ),
+              const BottomNavigationBarItem(
+              icon: Icon(Icons.health_and_safety),
+              label: "Safety",
               backgroundColor: Colors.black,
             ),
           ],
@@ -117,26 +158,27 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.only(top: 64.0, left: 16.0, right: 16.0),
           child: Text(
-            "Hello $userEmailString!",
-            style: const TextStyle(
+            "Hello $USER_NAME_GLOBAL!",
+            style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white),
+                color: Theme.of(context).colorScheme.primary),
             textAlign: TextAlign.left,
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.all(16.0),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Text(
             "Explore and work with the PaLM API!", // Add your subheading text here
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
+            style: TextStyle(
+                fontSize: 18.0, color: Theme.of(context).colorScheme.primary),
             textAlign: TextAlign.left,
           ),
         ),
-        const Divider(
-          color: Colors.white,
+        Divider(
+          color: Theme.of(context).colorScheme.primary,
         ),
-        Expanded(
+        const Expanded(
           child: ApiIntegrationWidget(),
         ),
       ],

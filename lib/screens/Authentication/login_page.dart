@@ -1,55 +1,59 @@
 import "package:ChatPaLM/Components/button.dart";
 import "package:ChatPaLM/Components/squaretile.dart";
 import "package:ChatPaLM/Components/textfield.dart";
+import "package:ChatPaLM/screens/Forgot_Password/forgot_password.dart";
+import "package:ChatPaLM/screens/Home/home_page.dart";
 import "package:ChatPaLM/services/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
-class RegisterPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   final Function? onTap;
-  const RegisterPage({super.key, required this.onTap});
+  LoginPage({super.key, required this.onTap});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
 
   void showErrorMessage(String message) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Colors.deepPurple,
+            backgroundColor: Theme.of(context).colorScheme.background,
             title: Center(
               child: Text(
                 message,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ),
           );
         });
   }
 
-  void signUserUp() async {
+  void signUserIn() async {
     showDialog(
         context: context,
         builder: (context) {
-          return const Center();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         });
     try {
-      if (passwordController.text == confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
-      } else {
-        Navigator.pop(context);
-        showErrorMessage("Passwords Don't Match");
-      }
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+      Navigator.pop(context);
+
+      // Redirect to the home_page.dart file
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
       showErrorMessage(e.code);
     }
   }
@@ -57,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: Center(
           child: SingleChildScrollView(
@@ -69,17 +73,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 Image.asset(
                   'lib/assets/logos/PaLM Logo.png',
-                  width: 100,
-                  height: 100,
+                  width: 75,
+                  height: 75,
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
-                const Text(
-                  "Let's create an account for you!",
+                Text(
+                  "Welcome to ChatPaLM!🎉🎉",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(
@@ -87,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 MyTextField(
                   controller: emailController,
-                  hintText: "Username",
+                  hintText: "Email",
                   obscureText: false,
                 ),
                 const SizedBox(
@@ -101,31 +106,46 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                MyTextField(
-                  controller: confirmPasswordController,
-                  hintText: 'Confirm Password',
-                  obscureText: true,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPasswordScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
+                          ))
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 MyButton(
-                  onTap: signUserUp,
-                  text: 'Sign Up',
+                  text: 'Sign In',
+                  onTap: signUserIn,
                 ),
                 const SizedBox(height: 50),
                 Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Divider(
                         thickness: 0.6,
-                        color: Colors.white,
+                        color: Colors.grey[400],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text('or Continue With',
-                          style: TextStyle(color: Colors.grey[600])),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary)),
                     ),
                     Expanded(
                       child: Divider(
@@ -140,28 +160,33 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Squaretile(
-                        imagePath: "lib/assets/images/google.png",
-                        onTap: () => AuthService().signInWithGoogle()),
-                    const SizedBox(width: 10),
-                    Squaretile(
-                        imagePath: "lib/assets/images/Apple_logo_white.png", onTap: () {})
+                      imagePath: "lib/assets/images/google.png",
+                      onTap: () => AuthService().signInWithGoogle(),
+                    ),
+                    // const SizedBox(width: 10),
+                    // Squaretile(
+                    //   // imagePath: "lib/assets/images/apple.png",
+                    //   imagePath: "lib/assets/images/Apple_logo_white.png",
+                    //   onTap: () {},
+                    // )
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Already a member?",
+                    Text(
+                      "Not a member ?",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap as void Function()?,
                       child: const Text(
-                        "Login",
+                        "Register Now",
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,

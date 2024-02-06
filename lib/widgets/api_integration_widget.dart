@@ -1,99 +1,133 @@
 import 'package:ChatPaLM/env/env.dart';
-import 'package:flutter/material.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_generative_language_api/google_generative_language_api.dart';
 import 'package:ChatPaLM/globals.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_generative_language_api/google_generative_language_api.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:ChatPaLM/providers/parameter_provider.dart';
 
-class ApiIntegrationWidget extends StatelessWidget {
+class ApiIntegrationWidget extends ConsumerStatefulWidget {
+  const ApiIntegrationWidget({Key? key}) : super(key: key);
+
+  @override
+  _ApiIntegrationWidgetState createState() => _ApiIntegrationWidgetState();
+}
+
+class _ApiIntegrationWidgetState extends ConsumerState<ApiIntegrationWidget>
+    with AutomaticKeepAliveClientMixin {
   final TextEditingController _promptInputController = TextEditingController();
   final TextEditingController _promptOutputController = TextEditingController();
-  ApiIntegrationWidget({super.key});
+  String mdText = "";
+
+  void updateText(String newText) {
+    setState(() {
+      mdText = newText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxHeight: 350.0,
-              ),
-              child: SingleChildScrollView(
-                child: TextField(
-                  style: const TextStyle(color: Colors.white),
-                  maxLines: null,
-                  enabled: false,
-                  controller: _promptOutputController,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.black,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
+            child: Stack(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: SingleChildScrollView(
+                    child: MarkdownBody(
+                      data: mdText,
+                      selectable: true,
+                      onTapLink: (text, href, title) {
+                        if (href != null) {
+                          launchUrl(Uri.parse(href));
+                        }
+                      },
+                      styleSheet: MarkdownStyleSheet(
+                        h1: const TextStyle(color: Colors.red, fontSize: 24),
+                        h2: const TextStyle(color: Colors.orange, fontSize: 20),
+                        p: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        codeblockDecoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.black),
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    hintText: "Output text",
-                    hintStyle: TextStyle(
-                      color: Colors.white, // Set the text color to white
                     ),
                   ),
                 ),
-              ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    onPressed: () {
+                      final text = _promptOutputController.text;
+                      Clipboard.setData(ClipboardData(text: text));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Copied to Clipboard')));
+                    },
+                    child: const Icon(Icons.copy_rounded),
+                  ),
+                ),
+              ],
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              Container(
                 width: 290.0,
+                padding: const EdgeInsets.only(right: 10.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 25.0, vertical: 25.0),
+                  padding: const EdgeInsets.symmetric(vertical: 25.0),
                   child: TextField(
                     minLines: 1,
                     maxLines: 50,
-                    style: const TextStyle(color: Colors.white),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                     controller: _promptInputController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color.fromRGBO(30, 30, 30, 1),
+                      fillColor: Theme.of(context).colorScheme.background,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color.fromRGBO(30, 30, 30, 1),
-                        ),
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color.fromRGBO(30, 30, 30, 1),
-                        ),
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       hintText: "Input text",
                       hintStyle: TextStyle(
-                        color: Colors.white, // Set the text color to white
-                      ),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                width: 100.0,
+                width: 75.0,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
+                    foregroundColor: Theme.of(context).colorScheme.background,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   onPressed: () {
                     generateTextWithPrompt(
                         promptString: _promptInputController.text);
                   },
-                  child: const Text('Generate Text'),
+                  child: const Text('Ask'),
                 ),
               ),
             ],
@@ -106,60 +140,57 @@ class ApiIntegrationWidget extends StatelessWidget {
   Future<String> generateTextWithPrompt({
     required String promptString,
   }) async {
-    // API Key from Envied .env file
-    String apiKey = Env.palmApiKey;
+    double temperature = ref.read(temperatureProvider);
+    double topK = ref.read(topKProvider);
+    double topP = ref.read(topPProvider);
 
-    // API Key from globals.dart
-    // String apiKey = PALM_API_KEY;
+    String apiKey = Env.palmApiKey;
 
     String textModel = 'models/text-bison-001';
 
+    print(temperature);
+    print(topK);
+    print(topP);
+
     GenerateTextRequest textRequest = GenerateTextRequest(
-        prompt: TextPrompt(text: promptString),
-        temperature: 0.7,
-        // Control the randomness of text generation
-        candidateCount: 1,
-        // Number of generated text candidates
-        topK: 40,
-        // Consider the top K probable tokens
-        topP: 0.95,
-        // Nucleus sampling parameter
-        maxOutputTokens: 1024,
-        // Maximum number of output tokens
-        stopSequences: [],
-        // Sequences at which to stop generation
-        safetySettings: const [
-          // Define safety settings to filter out harmful content
-          SafetySetting(
-              category: HarmCategory.derogatory,
-              threshold: HarmBlockThreshold.lowAndAbove),
-          SafetySetting(
-              category: HarmCategory.toxicity,
-              threshold: HarmBlockThreshold.lowAndAbove),
-          SafetySetting(
-              category: HarmCategory.violence,
-              threshold: HarmBlockThreshold.mediumAndAbove),
-          SafetySetting(
-              category: HarmCategory.sexual,
-              threshold: HarmBlockThreshold.mediumAndAbove),
-          SafetySetting(
-              category: HarmCategory.medical,
-              threshold: HarmBlockThreshold.mediumAndAbove),
-          SafetySetting(
-              category: HarmCategory.dangerous,
-              threshold: HarmBlockThreshold.mediumAndAbove),
-        ]);
+      prompt: TextPrompt(text: promptString),
+      temperature: temperature,
+      candidateCount: 1,
+      topK: topK.round(),
+      topP: topP,
+      maxOutputTokens: 1024,
+      safetySettings: const [
+        SafetySetting(
+            category: HarmCategory.derogatory,
+            threshold: HarmBlockThreshold.lowAndAbove),
+        SafetySetting(
+            category: HarmCategory.toxicity,
+            threshold: HarmBlockThreshold.lowAndAbove),
+        SafetySetting(
+            category: HarmCategory.violence,
+            threshold: HarmBlockThreshold.mediumAndAbove),
+        SafetySetting(
+            category: HarmCategory.sexual,
+            threshold: HarmBlockThreshold.mediumAndAbove),
+        SafetySetting(
+            category: HarmCategory.medical,
+            threshold: HarmBlockThreshold.mediumAndAbove),
+        SafetySetting(
+            category: HarmCategory.dangerous,
+            threshold: HarmBlockThreshold.mediumAndAbove),
+      ],
+    );
 
     final GeneratedText response = await GenerativeLanguageAPI.generateText(
       modelName: textModel,
       request: textRequest,
       apiKey: apiKey,
     );
-    print(response.candidates.map((candidate) => candidate.output).join('\n'));
+
     _promptOutputController.text =
         response.candidates.map((candidate) => candidate.output).join('\n');
+    updateText(_promptOutputController.text);
 
-    // Extract and return the generated text
     if (response.candidates.isNotEmpty) {
       TextCompletion candidate = response.candidates.first;
       return candidate.output;
@@ -167,4 +198,7 @@ class ApiIntegrationWidget extends StatelessWidget {
 
     return '';
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -17,25 +17,25 @@ class MyTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextField(
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Theme.of(context).colorScheme.primary),
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Color.fromRGBO(30, 30, 30, 1),
+              color: Theme.of(context).colorScheme.background,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Color.fromRGBO(30, 30, 30, 1),
+              color: Theme.of(context).colorScheme.background,
             ),
           ),
-          fillColor: Color.fromRGBO(30, 30, 30, 1),
+          fillColor: Theme.of(context).colorScheme.tertiary,
           filled: true,
           hintText: hintText,
           hintStyle: TextStyle(
-            color: Colors.white, // Set the text color to white
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
