@@ -122,25 +122,25 @@ class _HomePageState extends State<HomePage> {
             });
           },
           currentIndex: myIndex,
-          items: [
-            const BottomNavigationBarItem(
+          items: const [
+            BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Home",
               backgroundColor: Colors.black,
             ),
-            const BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: "Profile",
               backgroundColor: Colors.black,
             ),
-            if (Platform
-                .isAndroid) // Conditionally include the item only on Android
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: "Settings",
-                backgroundColor: Colors.black,
-              ),
-              const BottomNavigationBarItem(
+            // if (Platform
+            //     .isAndroid) // Conditionally include the item only on Android
+            //   const BottomNavigationBarItem(
+            //     icon: Icon(Icons.settings),
+            //     label: "Settings",
+            //     backgroundColor: Colors.black,
+            //   ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.health_and_safety),
               label: "Safety",
               backgroundColor: Colors.black,
