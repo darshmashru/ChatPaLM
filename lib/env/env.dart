@@ -2,7 +2,8 @@ import 'package:envied/envied.dart';
 
 part 'env.g.dart';
 
-@Envied(path: '.env')
+// @Envied(path: '.env')
+@Envied()
 abstract class Env {
   @EnviedField(varName: "FIREBASE_WEB", obfuscate: true)
   static final String firebaseWeb = _Env.firebaseWeb;
