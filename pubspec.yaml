@@ -84,7 +84,7 @@ flutter:
     - lib/assets/images/
     - lib/assets/logos/palm_logo.svg
     - lib/assets/logos/
-    - .env
+  #   - .env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
