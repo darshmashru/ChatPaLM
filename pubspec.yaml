@@ -69,7 +69,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "lib/assets/logos/PaLM Logo.png"
+  image_path: "lib/assets/logos/palm_logo.png"
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -82,7 +82,7 @@ flutter:
 
   assets:
     - lib/assets/images/
-    - lib/assets/logos/PaLM_logo.svg
+    - lib/assets/logos/palm_logo.svg
     - lib/assets/logos/
     - .env
   #   - images/a_dot_ham.jpeg
