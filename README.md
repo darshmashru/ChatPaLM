@@ -1,11 +1,11 @@
 
 # ChatPaLM
 
-A Flutter project that enables you to access the PaLM API from a Flutter application. In order to use ChatPaLM, you need to get an API Key from makersuite.google.com. Once you have the key, you can paste it in the profile section of the application and start writing prompts from within the application.
+A Flutter project that enables you to access the PaLM API from a Flutter application. In order to use ChatPaLM, you need to get an API Key from [aistudio.google.com](https://aistudio.google.com/). Once you have the key, you can paste it in the profile section of the application and start writing prompts from within the application.
 
+https://medium.com/google-cloud/introducing-chatpalm-b11ed75f083f
 
-
-# DEMO
+# Demo
 
 
 https://github.com/darshmashru/ChatPaLM/assets/70889682/08ecb8de-bf04-491a-a275-31942ab609a6
