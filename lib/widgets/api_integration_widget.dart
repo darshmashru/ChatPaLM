@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_generative_language_api/google_generative_language_api.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:ChatPaLM/providers/parameter_provider.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ApiIntegrationWidget extends ConsumerStatefulWidget {
   const ApiIntegrationWidget({Key? key}) : super(key: key);
@@ -18,8 +18,30 @@ class ApiIntegrationWidget extends ConsumerStatefulWidget {
 class _ApiIntegrationWidgetState extends ConsumerState<ApiIntegrationWidget>
     with AutomaticKeepAliveClientMixin {
   final TextEditingController _promptInputController = TextEditingController();
-  final TextEditingController _promptOutputController = TextEditingController();
   String mdText = "";
+
+  // added websocket integration
+  final WebSocketChannel channel =
+      WebSocketChannel.connect(Uri.parse('ws://localhost:3000'));
+  String output = '';
+  void sendMessage(String message) {
+    print(message);
+
+    try {
+      channel.sink.add(message);
+
+      channel.stream.listen((message) {
+        print(message);
+        setState(() {
+          output = message;
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
+
+    _promptInputController.clear();
+  }
 
   void updateText(String newText) {
     setState(() {
@@ -71,10 +93,10 @@ class _ApiIntegrationWidgetState extends ConsumerState<ApiIntegrationWidget>
                     backgroundColor: Colors.transparent,
                     foregroundColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
-                      final text = _promptOutputController.text;
+                      final text = output;
                       Clipboard.setData(ClipboardData(text: text));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Copied to Clipboard')));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Copied to Clipboard: $text')));
                     },
                     child: const Icon(Icons.copy_rounded),
                   ),
@@ -124,8 +146,7 @@ class _ApiIntegrationWidgetState extends ConsumerState<ApiIntegrationWidget>
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   onPressed: () {
-                    generateTextWithPrompt(
-                        promptString: _promptInputController.text);
+                    sendMessage(_promptInputController.text);
                   },
                   child: const Text('Ask'),
                 ),
@@ -135,68 +156,6 @@ class _ApiIntegrationWidgetState extends ConsumerState<ApiIntegrationWidget>
         ],
       ),
     );
-  }
-
-  Future<String> generateTextWithPrompt({
-    required String promptString,
-  }) async {
-    double temperature = ref.read(temperatureProvider);
-    double topK = ref.read(topKProvider);
-    double topP = ref.read(topPProvider);
-
-    String apiKey = Env.palmApiKey;
-
-    String textModel = 'models/text-bison-001';
-
-    print(temperature);
-    print(topK);
-    print(topP);
-
-    GenerateTextRequest textRequest = GenerateTextRequest(
-      prompt: TextPrompt(text: promptString),
-      temperature: temperature,
-      candidateCount: 1,
-      topK: topK.round(),
-      topP: topP,
-      maxOutputTokens: 1024,
-      safetySettings: const [
-        SafetySetting(
-            category: HarmCategory.derogatory,
-            threshold: HarmBlockThreshold.lowAndAbove),
-        SafetySetting(
-            category: HarmCategory.toxicity,
-            threshold: HarmBlockThreshold.lowAndAbove),
-        SafetySetting(
-            category: HarmCategory.violence,
-            threshold: HarmBlockThreshold.mediumAndAbove),
-        SafetySetting(
-            category: HarmCategory.sexual,
-            threshold: HarmBlockThreshold.mediumAndAbove),
-        SafetySetting(
-            category: HarmCategory.medical,
-            threshold: HarmBlockThreshold.mediumAndAbove),
-        SafetySetting(
-            category: HarmCategory.dangerous,
-            threshold: HarmBlockThreshold.mediumAndAbove),
-      ],
-    );
-
-    final GeneratedText response = await GenerativeLanguageAPI.generateText(
-      modelName: textModel,
-      request: textRequest,
-      apiKey: apiKey,
-    );
-
-    _promptOutputController.text =
-        response.candidates.map((candidate) => candidate.output).join('\n');
-    updateText(_promptOutputController.text);
-
-    if (response.candidates.isNotEmpty) {
-      TextCompletion candidate = response.candidates.first;
-      return candidate.output;
-    }
-
-    return '';
   }
 
   @override
